@@ -1,5 +1,7 @@
 # Campeones25
-  No se que se supone que haremos aqui, pero tenemos que hacer algo que minimamente funcione, o que por lo menos Jose lo vea bien sin matarnos
 ## Integrantes
 - [Carlos Dominguez Hernandez](https://github.com/cdominguezh06)
+- [Sorin-Stefan Pirvu](https://github.com/stefanp29)
+- [Mario Galán Trinidad](https://github.com/MarioGT10)
+- [Alba Collado Galán](https://github.com/albacg9)
 - [Carlos Cano Triviño](https://github.com/CarlosCanoTrivinho)
