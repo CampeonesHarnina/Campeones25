@@ -2,11 +2,11 @@ package com.campeones.proyectomoviles.mappers;
 
 import java.util.List;
 
+import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
+import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.campeones.proyectomoviles.model.DTOs.UsuarioDTO;
-import com.campeones.proyectomoviles.model.entities.Usuario;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {

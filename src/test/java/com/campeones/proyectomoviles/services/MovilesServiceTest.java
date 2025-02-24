@@ -7,12 +7,12 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.campeones.proyectomoviles.model.DTO.MovilDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.campeones.proyectomoviles.model.DTOs.MovilDTO;
 
 @SpringBootTest
 class MovilesServiceTest {

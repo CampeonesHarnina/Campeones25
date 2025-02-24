@@ -2,10 +2,10 @@ package com.campeones.proyectomoviles.mappers;
 
 import java.util.List;
 
+import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
+import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import org.mapstruct.Mapper;
 
-import com.campeones.proyectomoviles.model.DTOs.AnuncioDTO;
-import com.campeones.proyectomoviles.model.entities.Anuncio;
 
 @Mapper(componentModel = "spring")
 public interface AnuncioMapper {

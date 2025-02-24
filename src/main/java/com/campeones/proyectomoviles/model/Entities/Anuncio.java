@@ -20,13 +20,13 @@ public class Anuncio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAnuncio;
-	private com.campeones.proyectomoviles.entity.Estado estado;
-	private com.campeones.proyectomoviles.entity.TipoCambio tipoCambio;
+	private Estado estado;
+	private TipoCambio tipoCambio;
 	private LocalDate fechaPublicacion;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private com.campeones.proyectomoviles.entity.Movil movil;
+	private Movil movil;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private com.campeones.proyectomoviles.entity.Usuario usuario;
+	private Usuario usuario;
 }

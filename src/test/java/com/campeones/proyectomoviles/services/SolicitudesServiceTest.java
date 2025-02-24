@@ -6,12 +6,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
+import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.campeones.proyectomoviles.model.DTOs.SolicitudDTO;
 
 @SpringBootTest
 class SolicitudesServiceTest {

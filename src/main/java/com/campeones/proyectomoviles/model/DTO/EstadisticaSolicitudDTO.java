@@ -1,4 +1,4 @@
-package com.campeones.proyectomoviles.model.DTOs;
+package com.campeones.proyectomoviles.model.DTO;
 
 import java.util.Date;
 

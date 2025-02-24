@@ -1,9 +1,9 @@
 package com.campeones.proyectomoviles.mappers;
 
+import com.campeones.proyectomoviles.model.DTO.EstadisticaSolicitudDTO;
+import com.campeones.proyectomoviles.model.Entities.EstadisticaSolicitud;
 import org.mapstruct.Mapper;
 
-import com.campeones.proyectomoviles.model.DTOs.EstadisticaSolicitudDTO;
-import com.campeones.proyectomoviles.model.entities.EstadisticaSolicitud;
 
 @Mapper(componentModel = "spring")
 public interface EstadisticaSolicitudMapper {
