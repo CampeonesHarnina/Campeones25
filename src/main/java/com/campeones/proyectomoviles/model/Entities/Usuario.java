@@ -1,4 +1,4 @@
-package com.campeones.proyectomoviles.entity;
+package com.campeones.proyectomoviles.model.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

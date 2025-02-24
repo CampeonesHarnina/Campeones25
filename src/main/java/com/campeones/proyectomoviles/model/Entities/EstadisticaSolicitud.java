@@ -1,4 +1,4 @@
-package com.campeones.proyectomoviles.entity;
+package com.campeones.proyectomoviles.model.Entities;
 
 import java.time.LocalDate;
 

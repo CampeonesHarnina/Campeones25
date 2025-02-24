@@ -1,4 +1,4 @@
-package com.campeones.proyectomoviles.entity;
+package com.campeones.proyectomoviles.model.Entities;
 
 import java.time.LocalDate;
 
@@ -20,13 +20,13 @@ public class Anuncio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAnuncio;
-	private Estado estado;
-	private TipoCambio tipoCambio;
+	private com.campeones.proyectomoviles.entity.Estado estado;
+	private com.campeones.proyectomoviles.entity.TipoCambio tipoCambio;
 	private LocalDate fechaPublicacion;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private Movil movil;
+	private com.campeones.proyectomoviles.entity.Movil movil;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private Usuario usuario;
+	private com.campeones.proyectomoviles.entity.Usuario usuario;
 }
