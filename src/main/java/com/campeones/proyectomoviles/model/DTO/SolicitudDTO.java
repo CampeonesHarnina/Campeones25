@@ -1,5 +1,8 @@
-package com.campeones.proyectomoviles.model.DTO;
+package com.campeones.proyectomoviles.model.DTOs;
 
-public record SolicitudDTO() {
+import java.util.Date;
+
+public record SolicitudDTO(int idSolicitud, int idRemitente, int idDestinatario, int idAnuncio, Date fechaSolicitud,
+		boolean contestada) {
 
 }

@@ -1,5 +1,7 @@
-package com.campeones.proyectomoviles.model.DTO;
+package com.campeones.proyectomoviles.model.DTOs;
 
-public record ProcesadorDTO() {
+import java.math.BigDecimal;
+
+public record ProcesadorDTO(int idProcesador, String tipo, int nucleos, BigDecimal velocidadMaxima) {
 
 }
