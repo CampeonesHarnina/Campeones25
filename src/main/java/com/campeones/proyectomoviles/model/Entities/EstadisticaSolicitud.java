@@ -2,6 +2,8 @@ package com.campeones.proyectomoviles.model.Entities;
 
 import java.time.LocalDate;
 
+import com.campeones.proyectomoviles.model.POJO.Estado;
+import com.campeones.proyectomoviles.model.POJO.TipoCambio;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class EstadisticaSolicitud {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idEstadistica;
+    private Long id;
     private TipoCambio tipoCambio;
     private Estado estado;
     private LocalDate fechaInicio;

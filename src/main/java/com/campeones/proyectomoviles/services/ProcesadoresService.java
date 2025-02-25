@@ -1,8 +1,11 @@
 package com.campeones.proyectomoviles.services;
 
+import com.campeones.proyectomoviles.model.Entities.Procesador;
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
+
+import java.util.function.Predicate;
 
 
 public interface ProcesadoresService {
@@ -12,5 +15,7 @@ public interface ProcesadoresService {
 
 	public ResponseEntity<ProcesadorDTO> put(ProcesadorDTO procesador);
 
-	public ResponseEntity<ProcesadorDTO> delete(int id);
+	public ResponseEntity<ProcesadorDTO> delete(long id);
+
+	public ResponseEntity<ProcesadorDTO> getByFilter(Predicate<Procesador> filter);
 }

@@ -1,5 +1,4 @@
 package com.campeones.proyectomoviles.model.DTO;
 
-public record UsuarioDTO(int idUsuario, String nombre, String email, boolean esAdmin) {
-
+public record UsuarioDTO(Long id, String nombre, String password, String email, boolean esAdmin) {
 }

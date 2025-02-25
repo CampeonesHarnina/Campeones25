@@ -1,8 +1,10 @@
 package com.campeones.proyectomoviles.model.DTO;
 
-import java.util.Date;
+import com.campeones.proyectomoviles.model.POJO.Estado;
+import com.campeones.proyectomoviles.model.POJO.TipoCambio;
 
-public record AnuncioDTO(int idAnuncio, int idUsuario, int idMovil, String estado, String tipoCambio,
-		Date fechaPublicacion) {
+import java.time.LocalDate;
 
+public record AnuncioDTO(Long id, Estado estado, TipoCambio tipoCambio, LocalDate fechaPublicacion,
+						 MovilDTO movil, UsuarioDTO usuario) {
 }

@@ -1,12 +1,10 @@
 package com.campeones.proyectomoviles.model.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -15,9 +13,28 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idUsuario;
+    private Long id;
     private String nombre;
+    @Column(unique = true)
     private String email;
     private String password;
     private int esAdmin;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Anuncio> anuncios;
+
+    @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Solicitud> solicitudesEnviadas;
+
+    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Solicitud> solicitudesRecibidas;
 }

@@ -1,16 +1,15 @@
 package com.campeones.proyectomoviles.model.Entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.campeones.proyectomoviles.model.POJO.AspectRatio;
+import com.campeones.proyectomoviles.model.POJO.Resolucion;
+import com.campeones.proyectomoviles.model.POJO.ResolucionTarget;
+import com.campeones.proyectomoviles.model.POJO.TecnologiaPantalla;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
@@ -19,12 +18,13 @@ import lombok.NoArgsConstructor;
 public class Movil {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idMovil;
+	private Long id;
 	private String marca;
 	private String modelo;
 	private int almacenamiento;
 	private float tamanioPantalla;
-	private String tecnologiaPantalla;
+	private AspectRatio aspectRatio;
+	private TecnologiaPantalla tecnologiaPantalla;
 	private int ram;
 	private float peso;
 	private int camara;
@@ -33,9 +33,18 @@ public class Movil {
 	private float precioActual;
 	private LocalDate fechaLanzamiento;
 	private int consultas;
-	private String resolucion;
+	private int proporcionAlto;
+	private int proporcionAncho;
+	private ResolucionTarget resolucionTarget;
+	private Resolucion resolucion;
 	private String dimensionesMovil;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Procesador procesador;
+
+	@OneToMany(mappedBy = "movil", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@JsonIgnore
+	private List<Anuncio> anuncios;
 }

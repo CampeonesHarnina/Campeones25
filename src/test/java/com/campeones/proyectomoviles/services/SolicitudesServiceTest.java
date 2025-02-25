@@ -9,6 +9,7 @@ import java.util.Date;
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -21,14 +22,13 @@ class SolicitudesServiceTest {
 
 	@Test
 	void testPost() {
-		SolicitudDTO solicitudDTO = new SolicitudDTO(1, 1, 1, 1, new Date(), true);
+
+		SolicitudDTO solicitudDTO = new SolicitudDTO(1l, null, null, null, null, 0);
 
 		when(solicitudesService.post(solicitudDTO)).thenReturn(ResponseEntity.ok(solicitudDTO));
 
 		ResponseEntity<SolicitudDTO> response = solicitudesService.post(solicitudDTO);
-
-		assertNotNull(response);
-		assertEquals("200 OK", response.getStatusCode().toString());
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
 }

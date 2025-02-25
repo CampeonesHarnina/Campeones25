@@ -19,7 +19,7 @@ class UsuariosServiceTest {
 
 	@Test
 	void testPost() {
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1, "Prueba", "prueba@gmail.com", false);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1l, "Prueba", "prueba@gmail.com", "aa@gmail.com", true);
 
 		when(usuariosService.post(usuarioDTO)).thenReturn(ResponseEntity.ok(usuarioDTO));
 
