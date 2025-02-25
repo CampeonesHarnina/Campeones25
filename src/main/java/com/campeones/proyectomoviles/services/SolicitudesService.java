@@ -1,6 +1,5 @@
 package com.campeones.proyectomoviles.services;
 
-import com.campeones.proyectomoviles.model.Entities.Solicitud;
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
@@ -16,6 +15,6 @@ public interface SolicitudesService {
 
 	public ResponseEntity<SolicitudDTO> delete(long id);
 
-	public ResponseEntity<SolicitudDTO> getByFilter(Predicate<Solicitud> filter);
+	public ResponseEntity<SolicitudDTO> getByFilter(Predicate<SolicitudDTO> filter);
 
 }

@@ -17,5 +17,5 @@ public interface MovilesService {
 
 	public ResponseEntity<MovilDTO> delete(long id);
 
-	public ResponseEntity<MovilDTO> getByFilter(Predicate<Movil> filter);
+	public ResponseEntity<MovilDTO> getByFilter(Predicate<MovilDTO> filter);
 }

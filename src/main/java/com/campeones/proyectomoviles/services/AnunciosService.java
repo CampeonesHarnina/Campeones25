@@ -1,6 +1,5 @@
 package com.campeones.proyectomoviles.services;
 
-import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
@@ -21,5 +20,5 @@ public interface AnunciosService {
 
 	public ResponseEntity<AnuncioDTO> deleteAnuncioUsuario(long id);
 
-	public ResponseEntity<List<AnuncioDTO>> getByFilter(Predicate<Anuncio> filtro);
+	public ResponseEntity<List<AnuncioDTO>> getByFilter(Predicate<AnuncioDTO> filtro);
 }

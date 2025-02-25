@@ -1,6 +1,5 @@
 package com.campeones.proyectomoviles.services;
 
-import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
@@ -16,5 +15,5 @@ public interface UsuariosService {
 
 	public ResponseEntity<UsuarioDTO> delete(long id);
 
-	public ResponseEntity<UsuarioDTO> getByFilter(Predicate<Usuario> filter);
+	public ResponseEntity<UsuarioDTO> getByFilter(Predicate<UsuarioDTO> filter);
 }

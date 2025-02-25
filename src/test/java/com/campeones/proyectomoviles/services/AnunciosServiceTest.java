@@ -92,7 +92,7 @@ class AnunciosServiceTest {
 
     @Test
     void testGetAnunciosFiltrados() {
-        Predicate<Anuncio> filtro = t -> t.getEstado().equals(Estado.INTACTO);
+        Predicate<AnuncioDTO> filtro = t -> t.estado().equals(Estado.INTACTO);
 		when(anunciosService.getByFilter(filtro)).thenReturn(ResponseEntity.ok().build());
 
 		ResponseEntity<?> response = anunciosService.getByFilter(filtro);

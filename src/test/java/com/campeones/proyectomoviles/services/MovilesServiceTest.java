@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.function.Predicate;
 
 import com.campeones.proyectomoviles.model.DTO.MovilDTO;
 import org.junit.jupiter.api.Test;
@@ -38,9 +39,10 @@ class MovilesServiceTest {
 
 	@Test
 	void testGetByBrand() {
-		when(movilesService.getByMarca("Samsung")).thenReturn(ResponseEntity.ok().build());
+		Predicate<MovilDTO> filter = m-> m.marca().equals("Samsung");
+		when(movilesService.getByFilter(filter)).thenReturn(ResponseEntity.ok().build());
 
-		ResponseEntity<?> response = movilesService.getByMarca("Samsung");
+		ResponseEntity<?> response = movilesService.getByFilter(filter);
 
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
