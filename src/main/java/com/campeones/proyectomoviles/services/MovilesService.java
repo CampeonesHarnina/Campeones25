@@ -1,21 +1,19 @@
 package com.campeones.proyectomoviles.services;
 
-import com.campeones.proyectomoviles.model.Entities.Movil;
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.MovilDTO;
 
-import java.util.function.Predicate;
+import java.util.List;
 
 public interface MovilesService {
-	
-	public ResponseEntity<MovilDTO> get();
 
-	public ResponseEntity<MovilDTO> post(MovilDTO movil);
-
-	public ResponseEntity<MovilDTO> put(MovilDTO movil);
-
-	public ResponseEntity<MovilDTO> delete(long id);
-
-	public ResponseEntity<MovilDTO> getByFilter(Predicate<MovilDTO> filter);
+    ResponseEntity<MovilDTO> get();
+    ResponseEntity<MovilDTO> post(MovilDTO movil);
+    ResponseEntity<MovilDTO> put(MovilDTO movil);
+    ResponseEntity<MovilDTO> delete(long id);
+    ResponseEntity<List<MovilDTO>> filterByMarca(String marca);
+    ResponseEntity<List<MovilDTO>> filterByRamBetween(int min, int max);
+    ResponseEntity<List<MovilDTO>> filterByPrecioActualBetween(float min, float max);
+    ResponseEntity<List<MovilDTO>> filterByNfc(int nfc);
 }
