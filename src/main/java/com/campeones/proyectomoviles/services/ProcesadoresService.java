@@ -8,13 +8,9 @@ import java.util.function.Predicate;
 
 
 public interface ProcesadoresService {
-	public ResponseEntity<ProcesadorDTO> get();
-
-	public ResponseEntity<ProcesadorDTO> post(ProcesadorDTO procesador);
-
-	public ResponseEntity<ProcesadorDTO> put(ProcesadorDTO procesador);
-
-	public ResponseEntity<ProcesadorDTO> delete(long id);
-
-	public ResponseEntity<ProcesadorDTO> getByFilter(Predicate<ProcesadorDTO> filter);
+	ResponseEntity<ProcesadorDTO> get();
+	ResponseEntity<ProcesadorDTO> post(ProcesadorDTO procesador);
+	ResponseEntity<ProcesadorDTO> put(ProcesadorDTO procesador);
+	ResponseEntity<ProcesadorDTO> delete(long id);
+	ResponseEntity<ProcesadorDTO> getByFilter(Predicate<ProcesadorDTO> filter);
 }

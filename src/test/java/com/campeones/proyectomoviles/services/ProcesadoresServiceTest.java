@@ -1,10 +1,8 @@
 package com.campeones.proyectomoviles.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 
 import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
 import org.junit.jupiter.api.Test;
