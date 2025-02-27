@@ -11,5 +11,5 @@ public interface UsuariosService {
 	ResponseEntity<UsuarioDTO> post(UsuarioDTO usuario);
 	ResponseEntity<UsuarioDTO> put(UsuarioDTO usuario);
 	ResponseEntity<UsuarioDTO> delete(long id);
-	ResponseEntity<UsuarioDTO> getByFilter(Predicate<UsuarioDTO> filter);
+
 }
