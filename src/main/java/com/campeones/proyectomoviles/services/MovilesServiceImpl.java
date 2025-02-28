@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class MovilesServiceImpl implements MovilesService {
 
-    @Autowired
     private MovilRepository repository;
 
+    @Autowired
     public MovilesServiceImpl(MovilRepository repository) {
         this.repository = repository;
     }

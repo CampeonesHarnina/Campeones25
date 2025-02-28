@@ -19,18 +19,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 class AnunciosServiceTest {
-/*
-public interface AnunciosService {
-    ResponseEntity<List<AnuncioDTO>> get();
-    ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncio);
-    ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncio);
-    ResponseEntity<AnuncioDTO> delete(long id);
-    ResponseEntity<AnuncioDTO> deleteAnuncioUsuario(long id);
-    ResponseEntity<List<AnuncioDTO>> getByFilter(Specification<Anuncio> spec);
-}
- */
+
     @MockitoBean
-    AnunciosService anunciosService;
+    AnunciosServiceImpl anunciosService;
 
     @Test
     void testGet() {
@@ -42,7 +33,6 @@ public interface AnunciosService {
 
     @Test
     void testPost() {
-
         AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.VENTA, LocalDate.now());
         when(anunciosService.post(anuncioDTO)).thenReturn(ResponseEntity.ok(anuncioDTO));
         ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);

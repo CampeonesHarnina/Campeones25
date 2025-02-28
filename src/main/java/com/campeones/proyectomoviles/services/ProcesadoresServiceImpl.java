@@ -14,14 +14,11 @@ import java.util.List;
 @Service
 public class ProcesadoresServiceImpl implements ProcesadoresService {
 
-    @Autowired
     private ProcesadorRepository repository;
 
-    @Autowired
-    private ProcesadorMapper mapper;
 
-    public ProcesadoresServiceImpl(ProcesadorMapper mapper, ProcesadorRepository repository) {
-        this.mapper = mapper;
+    @Autowired
+    public ProcesadoresServiceImpl(ProcesadorRepository repository) {
         this.repository = repository;
     }
 

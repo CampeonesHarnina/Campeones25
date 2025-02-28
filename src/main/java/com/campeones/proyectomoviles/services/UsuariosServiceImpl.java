@@ -11,15 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuariosServiceImpl implements UsuariosService {
 
-    @Autowired
     private UsuarioRepository repository;
 
     @Autowired
-    private UsuarioMapper mapper;
-
-    public UsuariosServiceImpl(UsuarioRepository repository, UsuarioMapper mapper) {
+    public UsuariosServiceImpl(UsuarioRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override

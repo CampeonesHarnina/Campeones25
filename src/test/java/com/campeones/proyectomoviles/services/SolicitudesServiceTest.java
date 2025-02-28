@@ -16,7 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 class SolicitudesServiceTest {
 
 	@MockitoBean
-	SolicitudesService solicitudesService;
+	SolicitudesServiceImpl solicitudesService;
 
 	@Test
 	void testPost() {

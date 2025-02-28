@@ -14,15 +14,11 @@ import java.util.List;
 @Service
 public class SolicitudesServiceImpl implements SolicitudesService {
 
-    @Autowired
     private SolicitudRepository repository;
 
     @Autowired
-    private SolicitudMapper mapper;
-
-    public SolicitudesServiceImpl(SolicitudRepository repository, SolicitudMapper mapper) {
+    public SolicitudesServiceImpl(SolicitudRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override

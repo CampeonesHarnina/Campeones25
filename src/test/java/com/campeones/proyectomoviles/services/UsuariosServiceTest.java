@@ -15,7 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 class UsuariosServiceTest {
 
 	@MockitoBean
-	UsuariosService usuariosService;
+	UsuariosServiceImpl usuariosService;
 
 	@Test
 	void testPost() {

@@ -18,7 +18,7 @@ import java.util.List;
 class ProcesadoresServiceTest {
 
 	@MockitoBean
-	ProcesadoresService procesadoresService;
+	ProcesadoresServiceImpl procesadoresService;
 
 	@Test
 	void testPost() {

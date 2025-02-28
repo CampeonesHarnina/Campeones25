@@ -18,7 +18,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 class MovilesServiceTest {
 
 	@MockitoBean
-	MovilesService movilesService;
+	MovilesServiceImpl movilesService;
 
 	@Test
 	void testPost() {
