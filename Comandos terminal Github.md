@@ -59,3 +59,5 @@ git clone https://github.com/CampeonesHarnina/Campeones25.git
 	Para clonar el repositorio es tan sencillo como abrir GitHub Desktop, desplegar el menú *File*
 	arriba a la izquierda y seleccionar la opción *Clone repository*. Ahi pegamos la URL que tenemos aqui arriba y automaticamente al clonar un repositorio desde la app de escritorio se creará un fork del mismo 
 
+
+
