@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 public class AnunciosController implements GenericController<AnuncioDTO, AnuncioFiltro, Long> {
 
-    @Autowired
     private AnunciosServiceImpl service;
 
     public AnunciosController(AnunciosServiceImpl service) {

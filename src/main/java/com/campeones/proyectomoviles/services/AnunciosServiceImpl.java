@@ -14,10 +14,9 @@ import java.util.List;
 @Service
 public class AnunciosServiceImpl implements AnunciosService {
 
-    private AnuncioRepository repository;
-    private AnuncioMapper mapper;
+    private final AnuncioRepository repository;
+    private final AnuncioMapper mapper;
 
-    @Autowired
     public AnunciosServiceImpl(AnuncioRepository repository, AnuncioMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
