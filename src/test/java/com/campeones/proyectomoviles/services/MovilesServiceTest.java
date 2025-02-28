@@ -32,9 +32,9 @@ class MovilesServiceTest {
 
 
 	@Test
-	void testFilterByMarca() {
-		when(movilesService.filterByMarca("Samsung")).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<?> response = movilesService.filterByMarca("Samsung");
+	void testGetByFilter() {
+		when(movilesService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
+		ResponseEntity<?> response = movilesService.getByFilter(null);
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 

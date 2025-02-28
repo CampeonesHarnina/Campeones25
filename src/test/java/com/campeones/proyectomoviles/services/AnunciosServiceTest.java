@@ -19,7 +19,16 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 class AnunciosServiceTest {
-
+/*
+public interface AnunciosService {
+    ResponseEntity<List<AnuncioDTO>> get();
+    ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncio);
+    ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncio);
+    ResponseEntity<AnuncioDTO> delete(long id);
+    ResponseEntity<AnuncioDTO> deleteAnuncioUsuario(long id);
+    ResponseEntity<List<AnuncioDTO>> getByFilter(Specification<Anuncio> spec);
+}
+ */
     @MockitoBean
     AnunciosService anunciosService;
 
@@ -34,7 +43,7 @@ class AnunciosServiceTest {
     @Test
     void testPost() {
 
-        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.VENTA, LocalDate.now(), null, null);
+        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.VENTA, LocalDate.now());
         when(anunciosService.post(anuncioDTO)).thenReturn(ResponseEntity.ok(anuncioDTO));
         ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -42,7 +51,7 @@ class AnunciosServiceTest {
 
     @Test
     void testPut() {
-        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.INTERCAMBIO, LocalDate.now(), null, null);
+        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.INTERCAMBIO, LocalDate.now());
         when(anunciosService.put(anuncioDTO)).thenReturn(ResponseEntity.ok(anuncioDTO));
         ResponseEntity<AnuncioDTO> response = anunciosService.put(anuncioDTO);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -50,18 +59,16 @@ class AnunciosServiceTest {
 
     @Test
     void testDelete() {
-        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.INTERCAMBIO, LocalDate.now(), null, null);
+        AnuncioDTO anuncioDTO = new AnuncioDTO(1l, Estado.INTACTO, TipoCambio.INTERCAMBIO, LocalDate.now());
         when(anunciosService.delete(anuncioDTO.id())).thenReturn(ResponseEntity.ok(anuncioDTO));
         ResponseEntity<AnuncioDTO> response = anunciosService.delete(anuncioDTO.id());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-
     @Test
-    void testGetAnunciosUsuario() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO(1l, "pepe", "1234", "a@gmail.com", true);
-        when(anunciosService.filterByUsuarioId(usuarioDTO.id())).thenReturn(ResponseEntity.ok().build());
-        ResponseEntity<?> response = anunciosService.filterByUsuarioId(usuarioDTO.id());
+    void testGetByFilter() {
+        when(anunciosService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
+        ResponseEntity<?> response = anunciosService.getByFilter(null);
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -74,17 +81,5 @@ class AnunciosServiceTest {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
-
-
-    @Test
-    void testGetAnunciosFiltrados() {
-		when(anunciosService.filterByEstado(Estado.INTACTO)).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<?> response = anunciosService.filterByEstado(Estado.INTACTO);
-		assertNotNull(response);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-	}
-
-
-
 
 }

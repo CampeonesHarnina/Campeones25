@@ -21,24 +21,16 @@ class SolicitudesServiceTest {
 	@Test
 	void testPost() {
 
-		SolicitudDTO solicitudDTO = new SolicitudDTO(1L, null, null, null, null, 0);
+		SolicitudDTO solicitudDTO = new SolicitudDTO(1L, null, 0);
 		when(solicitudesService.post(solicitudDTO)).thenReturn(ResponseEntity.ok(solicitudDTO));
 		ResponseEntity<SolicitudDTO> response = solicitudesService.post(solicitudDTO);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
 	@Test
-	void testFilterByRemitente(){
-		when(solicitudesService.filterByRemitenteId(1L)).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<?> response = solicitudesService.filterByRemitenteId(1L);
-		assertNotNull(response);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-	}
-
-	@Test
-	void testFilterByDestinatario(){
-		when(solicitudesService.filterByDestinatarioId(1L)).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<?> response = solicitudesService.filterByDestinatarioId(1L);
+	void testGetByFilter(){
+		when(solicitudesService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
+		ResponseEntity<?> response = solicitudesService.getByFilter(null);
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
