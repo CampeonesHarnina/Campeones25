@@ -22,9 +22,11 @@ public class Anuncio {
 	private LocalDate fechaPublicacion;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "movil_id")
 	private Movil movil;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)

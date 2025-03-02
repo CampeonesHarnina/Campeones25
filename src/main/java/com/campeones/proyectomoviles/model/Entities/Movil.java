@@ -38,6 +38,7 @@ public class Movil {
 	private String dimensionesMovil;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "procesador_id")
 	private Procesador procesador;
 
 	@OneToMany(mappedBy = "movil", cascade = CascadeType.ALL)

@@ -27,6 +27,6 @@ public record MovilDTO(
         ResolucionTarget resolucionTarget,
         Resolucion resolucion,
         String dimensionesMovil,
-        Procesador procesador
+        ProcesadorDTO procesador
 ) {
 }

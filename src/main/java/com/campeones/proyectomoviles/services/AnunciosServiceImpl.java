@@ -6,6 +6,7 @@ import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.filtros.AnuncioFiltro;
 import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import com.campeones.proyectomoviles.repositories.AnuncioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,32 +34,33 @@ public class AnunciosServiceImpl implements AnunciosService {
                 .toList());
     }
 
+    @Transactional
     @Override
     public ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncio) {
-        try {
-            Anuncio save = repository.save(mapper.mapToEntity(anuncio));
-            return ResponseEntity.ok(mapper.mapToDTO(save));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
+        Anuncio entity = mapper.mapToEntity(anuncio);
+        entity.setId(null);
+        Anuncio save = repository.save(entity);
+        return ResponseEntity.ok(mapper.mapToDTO(save));
     }
 
+    @Transactional
     @Override
     public ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncio) {
-        if(repository.existsById(anuncio.id())){
+        if (repository.existsById(anuncio.id())) {
             Anuncio save = repository.save(mapper.mapToEntity(anuncio));
             return ResponseEntity.ok(mapper.mapToDTO(save));
         }
         return ResponseEntity.notFound().build();
     }
 
+    @Transactional
     @Override
     public ResponseEntity<AnuncioDTO> delete(long id) {
-        if(repository.existsById(id)){
-            repository.deleteById(id);
+        if (repository.existsById(id)) {
+            Anuncio anuncio = repository.findById(id).get();
+            repository.delete(anuncio);
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
