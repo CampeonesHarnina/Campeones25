@@ -5,6 +5,7 @@ import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.repositories.AnuncioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class AnunciosServiceImpl implements AnunciosService {
     private final AnuncioRepository repository;
     private final AnuncioMapper mapper;
 
-    public AnunciosServiceImpl(AnuncioRepository repository, AnuncioMapper mapper) {
+    @Autowired
+    public AnunciosServiceImpl(AnuncioRepository repository, @Qualifier("anuncioMapperImpl") AnuncioMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
