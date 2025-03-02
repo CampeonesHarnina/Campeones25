@@ -13,6 +13,6 @@ public interface AnunciosService {
     ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncio);
     ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncio);
     ResponseEntity<AnuncioDTO> delete(long id);
-    ResponseEntity<AnuncioDTO> deleteAnuncioUsuario(long id);
+    ResponseEntity<List<AnuncioDTO>> getAnunciosUsuario(long id);
     ResponseEntity<List<AnuncioDTO>> getByFilter(Specification<Anuncio> spec);
 }

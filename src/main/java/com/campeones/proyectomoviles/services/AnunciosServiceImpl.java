@@ -3,6 +3,8 @@ package com.campeones.proyectomoviles.services;
 import com.campeones.proyectomoviles.mappers.AnuncioMapper;
 import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
+import com.campeones.proyectomoviles.model.filtros.AnuncioFiltro;
+import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import com.campeones.proyectomoviles.repositories.AnuncioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,27 +28,44 @@ public class AnunciosServiceImpl implements AnunciosService {
 
     @Override
     public ResponseEntity<List<AnuncioDTO>> get() {
-        return null;
+        return ResponseEntity.ok(repository.findAll().stream()
+                .map(mapper::mapToDTO)
+                .toList());
     }
 
     @Override
     public ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncio) {
-        return null;
+        try {
+            Anuncio save = repository.save(mapper.mapToEntity(anuncio));
+            return ResponseEntity.ok(mapper.mapToDTO(save));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @Override
     public ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncio) {
-        return null;
+        if(repository.existsById(anuncio.id())){
+            Anuncio save = repository.save(mapper.mapToEntity(anuncio));
+            return ResponseEntity.ok(mapper.mapToDTO(save));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<AnuncioDTO> delete(long id) {
-        return null;
+        if(repository.existsById(id)){
+            repository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
-    public ResponseEntity<AnuncioDTO> deleteAnuncioUsuario(long id) {
-        return null;
+    public ResponseEntity<List<AnuncioDTO>> getAnunciosUsuario(long id) {
+        return getByFilter(AnuncioSpecification.hasUsuarioId(id));
     }
 
     @Override

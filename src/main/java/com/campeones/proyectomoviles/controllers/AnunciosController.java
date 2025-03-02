@@ -5,7 +5,6 @@ import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.filtros.AnuncioFiltro;
 import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import com.campeones.proyectomoviles.services.AnunciosServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +40,7 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
 
     @Override
     public ResponseEntity<AnuncioDTO> delete(Long id) {
-        return null;
+        return service.delete(id);
     }
 
     @Override

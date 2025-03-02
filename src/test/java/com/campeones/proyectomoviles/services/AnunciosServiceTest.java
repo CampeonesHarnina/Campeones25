@@ -10,6 +10,7 @@ import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
 import com.campeones.proyectomoviles.model.POJO.Estado;
 import com.campeones.proyectomoviles.model.POJO.TipoCambio;
+import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -66,8 +67,8 @@ class AnunciosServiceTest {
     @Test
     void testDeleteAnuncioUsuario() {
         UsuarioDTO usuarioDTO = new UsuarioDTO(1l, "pepe", "1234", "a@gmail.com", true);
-        when(anunciosService.deleteAnuncioUsuario(usuarioDTO.id())).thenReturn(ResponseEntity.ok().build());
-        ResponseEntity<?> response = anunciosService.deleteAnuncioUsuario(usuarioDTO.id());
+        when(anunciosService.getAnunciosUsuario(usuarioDTO.id())).thenReturn(ResponseEntity.ok().build());
+        ResponseEntity<?> response = anunciosService.getAnunciosUsuario(usuarioDTO.id());
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
