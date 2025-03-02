@@ -3,7 +3,6 @@ package com.campeones.proyectomoviles.model.Entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.campeones.proyectomoviles.model.POJO.AspectRatio;
 import com.campeones.proyectomoviles.model.POJO.Resolucion;
 import com.campeones.proyectomoviles.model.POJO.ResolucionTarget;
 import com.campeones.proyectomoviles.model.POJO.TecnologiaPantalla;
@@ -17,19 +16,18 @@ import lombok.*;
 @Data
 public class Movil {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String marca;
 	private String modelo;
 	private int almacenamiento;
 	private float tamanioPantalla;
-	private AspectRatio aspectRatio;
 	private TecnologiaPantalla tecnologiaPantalla;
 	private int ram;
 	private float peso;
 	private int camara;
 	private int bateria;
-	private int nfc;
+	private boolean nfc;
 	private float precioActual;
 	private LocalDate fechaLanzamiento;
 	private int consultas;

@@ -23,7 +23,7 @@ class MovilesServiceTest {
 	@Test
 	void testPost() {
 
-		MovilDTO movilDTO = new MovilDTO(1l, "Samsung", "Galaxy S21", 128, 6.2f, null, null, 8, 169.0f, 12, 4000, 1, 849.0f, LocalDate.now(), 0, 20, 9, null, null, "151.7 x 71.2 x 7.9 mm", null);
+		MovilDTO movilDTO = new MovilDTO(1l, "Samsung", "Galaxy S21", 128, 6.2f, null,  8, 169.0f, 12, 4000, true, 849.0f, LocalDate.now(), 0, 20, 9, null, null, "151.7 x 71.2 x 7.9 mm", null);
 		when(movilesService.post(movilDTO)).thenReturn(ResponseEntity.ok(movilDTO));
 		ResponseEntity<MovilDTO> response = movilesService.post(movilDTO);
 		assertEquals(HttpStatus.OK, response.getStatusCode());

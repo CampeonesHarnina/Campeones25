@@ -15,7 +15,7 @@ import lombok.*;
 @Data
 public class Anuncio {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Estado estado;
 	private TipoCambio tipoCambio;

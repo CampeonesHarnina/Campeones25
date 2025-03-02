@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class EstadisticaSolicitud {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private TipoCambio tipoCambio;
     private Estado estado;

@@ -11,6 +11,6 @@ public interface MovilRepository extends JpaRepository<Movil, Long> {
     List<Movil>findByMarca(String marca);
     List<Movil> findByRamBetween(int min, int max);
     List<Movil> findByPrecioActualBetween(float min, float max);
-    List<Movil> findByNfc(int nfc);
+    List<Movil> findByNfc(boolean nfc);
 
 }
