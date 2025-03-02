@@ -5,8 +5,6 @@ import java.util.List;
 import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
-
 
 @Mapper(componentModel = "spring")
 public interface AnuncioMapper {

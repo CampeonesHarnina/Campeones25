@@ -18,7 +18,7 @@ public class Usuario {
     @Column(unique = true)
     private String email;
     private String password;
-    private int esAdmin;
+    private boolean esAdmin;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
