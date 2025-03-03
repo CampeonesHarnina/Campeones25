@@ -64,20 +64,24 @@ class AnunciosServiceTest {
     }
 
     @Test
-    void testPut() {
-        List<AnuncioDTO> body = anunciosService.get().getBody();
-        Anuncio anuncio = mapper.mapToEntity(body.get(0));
+    void testPostThenPut() {
+        ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        
+        Anuncio anuncio = mapper.mapToEntity(anuncioDTO);
         anuncio.setEstado(Estado.HEROE_DE_GUERRA);
         AnuncioDTO modificar = mapper.mapToDTO(anuncio);
+        
         ResponseEntity<AnuncioDTO> response = anunciosService.put(modificar);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    void testDelete() {
-        List<AnuncioDTO> body = anunciosService.get().getBody();
-        AnuncioDTO aBorrar = body.get(body.size() - 1);
-        ResponseEntity<AnuncioDTO> response = anunciosService.delete(aBorrar.id());
+    void testPostThenDelete() {
+        ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        
+        ResponseEntity<AnuncioDTO> response = anunciosService.delete(anuncioDTO.id());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
