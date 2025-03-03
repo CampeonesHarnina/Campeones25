@@ -80,8 +80,8 @@ class AnunciosServiceTest {
     void testPostThenDelete() {
         ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        
-        response = anunciosService.delete(anuncioDTO.id());
+        Anuncio aBorrar = anunciosService.get(anunciosService.get().size()-1);
+        response = anunciosService.delete(aBorrar.getId());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
