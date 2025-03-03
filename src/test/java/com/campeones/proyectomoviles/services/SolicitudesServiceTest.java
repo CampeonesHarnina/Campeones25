@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 
 @SpringBootTest
 class SolicitudesServiceTest {
@@ -28,7 +28,7 @@ class SolicitudesServiceTest {
 	}
 
 	@Test
-	void testGetByFilter(){
+	void testGetByFilter() {
 		when(solicitudesService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
 		ResponseEntity<?> response = solicitudesService.getByFilter(null);
 		assertNotNull(response);

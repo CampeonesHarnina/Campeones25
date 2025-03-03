@@ -2,10 +2,10 @@ package com.campeones.proyectomoviles.mappers;
 
 import java.util.List;
 
-import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
-import com.campeones.proyectomoviles.model.Entities.Solicitud;
 import org.mapstruct.Mapper;
 
+import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
+import com.campeones.proyectomoviles.model.Entities.Solicitud;
 
 @Mapper(componentModel = "spring")
 public interface SolicitudMapper {

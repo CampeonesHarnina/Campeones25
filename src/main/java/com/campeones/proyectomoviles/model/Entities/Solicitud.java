@@ -17,19 +17,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Solicitud {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private LocalDate fechaSolicitud;
-    private int contestada;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private LocalDate fechaSolicitud;
+	private int contestada;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Usuario remitente;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario remitente;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Usuario destinatario;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario destinatario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Anuncio anuncio;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Anuncio anuncio;
 
 }

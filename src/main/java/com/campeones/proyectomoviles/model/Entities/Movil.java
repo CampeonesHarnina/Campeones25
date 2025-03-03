@@ -8,8 +8,19 @@ import com.campeones.proyectomoviles.model.POJO.Resolucion;
 import com.campeones.proyectomoviles.model.POJO.ResolucionTarget;
 import com.campeones.proyectomoviles.model.POJO.TecnologiaPantalla;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -38,7 +49,7 @@ public class Movil {
 	private ResolucionTarget resolucionTarget;
 	private Resolucion resolucion;
 	private String dimensionesMovil;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Procesador procesador;
 
