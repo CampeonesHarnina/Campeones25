@@ -72,7 +72,7 @@ class AnunciosServiceTest {
         anuncio.setEstado(Estado.HEROE_DE_GUERRA);
         AnuncioDTO modificar = mapper.mapToDTO(anuncio);
         
-        ResponseEntity<AnuncioDTO> response = anunciosService.put(modificar);
+        response = anunciosService.put(modificar);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -81,7 +81,7 @@ class AnunciosServiceTest {
         ResponseEntity<AnuncioDTO> response = anunciosService.post(anuncioDTO);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
-        ResponseEntity<AnuncioDTO> response = anunciosService.delete(anuncioDTO.id());
+        response = anunciosService.delete(anuncioDTO.id());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
