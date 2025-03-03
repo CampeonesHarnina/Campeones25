@@ -49,7 +49,7 @@ public class JwtUtils {
 		}
 	}
 
-	public String getUSerNameFromToken(String token) {
+	public String getUserNameFromToken(String token) {
 		return getClaim(token, Claims::getSubject);
 	}
 

@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.security;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private final JwtUtils jwtUtils;
 	private final UserDetailsServiceImpl userDetailsServiceImpl;
 
+	@Autowired
 	public JwtAuthorizationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsServiceImpl) {
 		this.jwtUtils = jwtUtils;
 		this.userDetailsServiceImpl = userDetailsServiceImpl;
@@ -36,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 		isValidBearerHeader(header).ifPresent(token -> {
 			if (jwtUtils.isTokenValid(token)) {
-				String username = jwtUtils.getUSerNameFromToken(token); // username es email aquí
+				String username = jwtUtils.getUserNameFromToken(token); // username es email aquí
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
 						null, userDetails.getAuthorities());

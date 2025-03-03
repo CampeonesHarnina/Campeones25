@@ -3,8 +3,10 @@ package com.campeones.proyectomoviles.security;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,14 +20,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final JwtUtils jwtUtils;
-
-	public JwtAuthenticationFilter(JwtUtils jwtUtils) {
+	private final AuthenticationManager authenticationManager;
+	@Autowired
+	public JwtAuthenticationFilter(JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
 		super();
 		this.jwtUtils = jwtUtils;
+		this.authenticationManager = authenticationManager;
+		setAuthenticationManager(authenticationManager);
 	}
 
 	@Override

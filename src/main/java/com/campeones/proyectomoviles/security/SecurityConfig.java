@@ -1,5 +1,6 @@
 package com.campeones.proyectomoviles.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ public class SecurityConfig {
 	private final JwtUtils jwtUtils;
 	private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
+	@Autowired
 	public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, JwtUtils jwtUtils,
 			JwtAuthorizationFilter jwtAuthorizationFilter) {
 		this.userDetailsServiceImpl = userDetailsServiceImpl;
@@ -34,7 +36,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager)
 			throws Exception {
-		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
+		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, authenticationManager);
 		jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 

@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final UsuarioRepository userRepository;
 
+	@Autowired
 	public UserDetailsServiceImpl(UsuarioRepository userRepository) {
 		this.userRepository = userRepository;
 	}
