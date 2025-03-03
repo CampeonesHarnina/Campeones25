@@ -2,10 +2,10 @@ package com.campeones.proyectomoviles.mappers;
 
 import java.util.List;
 
-import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
-import com.campeones.proyectomoviles.model.Entities.Procesador;
 import org.mapstruct.Mapper;
 
+import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
+import com.campeones.proyectomoviles.model.Entities.Procesador;
 
 @Mapper(componentModel = "spring")
 public interface ProcesadorMapper {
