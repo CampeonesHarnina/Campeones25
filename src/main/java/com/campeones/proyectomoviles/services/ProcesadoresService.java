@@ -9,7 +9,7 @@ import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
 import com.campeones.proyectomoviles.model.Entities.Procesador;
 
 public interface ProcesadoresService {
-	ResponseEntity<ProcesadorDTO> get();
+	ResponseEntity<List<ProcesadorDTO>> get();
 
 	ResponseEntity<ProcesadorDTO> post(ProcesadorDTO procesador);
 
