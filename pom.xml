@@ -110,11 +110,6 @@
             <version>1.4.2.Final</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-        	<groupId>com.adorno</groupId>
-        	<artifactId>MVC3MoustacheObjetos</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
