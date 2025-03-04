@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProcesadorFiltro {
 
 	private String tipo;
-	private int nucleo;
-	private float velocidadMaxima;
+	private Integer nucleo;
+	private Float velocidadMaxima;
 	
 }
