@@ -10,7 +10,7 @@ import com.campeones.proyectomoviles.model.Entities.Movil;
 
 public interface MovilesService {
 
-	ResponseEntity<MovilDTO> get();
+	ResponseEntity<List<MovilDTO>> get();
 
 	ResponseEntity<MovilDTO> post(MovilDTO movil);
 
