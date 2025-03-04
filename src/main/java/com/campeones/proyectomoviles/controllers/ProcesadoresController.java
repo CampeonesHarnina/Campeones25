@@ -51,11 +51,11 @@ public class ProcesadoresController implements GenericController<ProcesadorDTO, 
 	    if (spec.getNucleo() != null) {  
 	        specification = specification.and(ProcesadorSpecification.hasNucleo(spec.getNucleo()));
 	    }
-	    if (spec.getVelocidadMinima()  != null) {  
-	        specification = specification.and(ProcesadorSpecification.hasVelocidadMaxima(spec.getVelocidadMinima()));
+	    if (spec.getVelocidadMin()  != null) {
+	        specification = specification.and(ProcesadorSpecification.hasVelocidadMaxima(spec.getVelocidadMin()));
 	    }
-	    if (spec.getVelocidadMaxima()  != null) {  
-	        specification = specification.and(ProcesadorSpecification.hasVelocidadMaxima(spec.getVelocidadMaxima()));
+	    if (spec.getVelocidadMax()  != null) {
+	        specification = specification.and(ProcesadorSpecification.hasVelocidadMaxima(spec.getVelocidadMax()));
 	    }
 
 	    return procesadoresService.getByFilter(specification);

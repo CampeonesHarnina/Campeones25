@@ -2,6 +2,7 @@ package com.campeones.proyectomoviles.controllers;
 
 import java.util.List;
 
+import com.campeones.proyectomoviles.model.specifications.SolicitudSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,10 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
 	        Specification<Solicitud> specification = Specification.where(null);
 
 	        if (spec.getFechaMin() != null) {
-	            specification = specification.and(SolicitudSpecification.hasFechaMin(spec.getFechaMin()));
+	            specification = specification.and(SolicitudSpecification.hasFechaMinima(spec.getFechaMin()));
 	        }
 	        if (spec.getFechaMax() != null) {
-	            specification = specification.and(SolicitudSpecification.hasFechaMax(spec.getFechaMax()));
+	            specification = specification.and(SolicitudSpecification.hasFechaMaxima(spec.getFechaMax()));
 	        }
 	        if (spec.getContestada() != null) {
 	            specification = specification.and(SolicitudSpecification.hasContestada(spec.getContestada()));
