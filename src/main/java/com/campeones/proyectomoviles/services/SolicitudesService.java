@@ -9,7 +9,7 @@ import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
 
 public interface SolicitudesService {
-	ResponseEntity<SolicitudDTO> get();
+	ResponseEntity<List<SolicitudDTO>> get();
 
 	ResponseEntity<SolicitudDTO> post(SolicitudDTO solicitud);
 
