@@ -38,7 +38,7 @@ class SolicitudesServiceTest {
 		Anuncio anuncio = new Anuncio();
 		UsuarioDTO usuarioDTO = usuarioMapper.mapToDTO(user);
 		AnuncioDTO anuncioDTO = anuncioMapper.mapToDTO(anuncio);
-		solicitudDTO = new SolicitudDTO(1L, null, 0, usuarioDTO, usuarioDTO, anuncioDTO);
+		solicitudDTO = new SolicitudDTO(1L, null, false, usuarioDTO, usuarioDTO, anuncioDTO);
 	}
 	@Test
 	void testPost() {
