@@ -41,7 +41,12 @@ public class SecurityConfig {
 		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
 		return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> {
-			auth.requestMatchers("/anuncio/find").permitAll();
+			auth.requestMatchers("/anuncios/find").permitAll();
+			auth.requestMatchers("anuncios/filter").permitAll();
+			auth.requestMatchers("/moviles/find").permitAll();
+			auth.requestMatchers("/moviles/filter").permitAll();
+			auth.requestMatchers("/procesadores/find").permitAll();
+			auth.requestMatchers("/procesadores/filter").permitAll();
 			auth.anyRequest().authenticated(); // Requiere autenticación en rutas no públicas
 		}).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilter(jwtAuthenticationFilter)

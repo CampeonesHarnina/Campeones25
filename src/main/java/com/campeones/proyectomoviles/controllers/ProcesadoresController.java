@@ -11,7 +11,11 @@ import com.campeones.proyectomoviles.model.Entities.Procesador;
 import com.campeones.proyectomoviles.model.filtros.ProcesadorFiltro;
 import com.campeones.proyectomoviles.model.specifications.ProcesadorSpecification;
 import com.campeones.proyectomoviles.services.ProcesadoresServiceImpl;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
+@RestController
 public class ProcesadoresController implements GenericController<ProcesadorDTO, ProcesadorFiltro, Long> {
 	private final ProcesadoresServiceImpl procesadoresService;
 	
@@ -20,22 +24,28 @@ public class ProcesadoresController implements GenericController<ProcesadorDTO, 
 		this.procesadoresService = procesadoresService;
 	}
 	
-	
+	@GetMapping("/procesadores/find")
 	@Override
 	public ResponseEntity<List<ProcesadorDTO>> get() {
 		return procesadoresService.get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/procesadores/new")
 	@Override
 	public ResponseEntity<ProcesadorDTO> post(ProcesadorDTO procesadorDTO) {
 		return procesadoresService.post(procesadorDTO);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/procesadores/update")
 	@Override
 	public ResponseEntity<ProcesadorDTO> put(ProcesadorDTO procesadorDTO) {
 		return procesadoresService.put(procesadorDTO);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/procesadores/delete/{id}")
 	@Override
 	public ResponseEntity<ProcesadorDTO> delete(Long id) {
 		return procesadoresService.delete(id);

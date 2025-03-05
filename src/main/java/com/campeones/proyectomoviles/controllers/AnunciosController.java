@@ -7,13 +7,14 @@ import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import com.campeones.proyectomoviles.services.AnunciosServiceImpl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
-public class AnunciosController implements GenericController<AnuncioDTO, AnuncioFiltro, Long> {
+public class AnunciosController implements GenericController<AnuncioDTO, AnuncioFiltro, Long>, UserCrudController<AnuncioDTO, Long> {
 
     private AnunciosServiceImpl service;
 
@@ -22,27 +23,34 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
     }
 
 
-    @GetMapping("/anuncios")
+    @GetMapping("/anuncios/find")
     @Override
     public ResponseEntity<List<AnuncioDTO>> get() {
         return service.get();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/anuncios/new")
     @Override
-    public ResponseEntity<AnuncioDTO> post(AnuncioDTO anuncioDTO) {
+    public ResponseEntity<AnuncioDTO> post(@RequestBody AnuncioDTO anuncioDTO) {
         return service.post(anuncioDTO);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/anuncios/update")
     @Override
-    public ResponseEntity<AnuncioDTO> put(AnuncioDTO anuncioDTO) {
+    public ResponseEntity<AnuncioDTO> put(@RequestBody AnuncioDTO anuncioDTO) {
         return service.put(anuncioDTO);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/anuncios/delete/{id}")
     @Override
-    public ResponseEntity<AnuncioDTO> delete(Long id) {
+    public ResponseEntity<AnuncioDTO> delete(@RequestParam Long id) {
         return service.delete(id);
     }
 
+    @GetMapping("/anuncios/filter")
     @Override
     public ResponseEntity<List<AnuncioDTO>> getByFilter(AnuncioFiltro spec) {
         Specification<Anuncio> specification = Specification.where(null);
@@ -61,5 +69,22 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
     }
 
 
+    @PostMapping("/anuncios/new/user/{id}")
+    @Override
+    public ResponseEntity<AnuncioDTO> addToUser(AnuncioDTO add, Long id) {
+        return null;
+    }
+
+    @PutMapping("/anuncios/update/user/{id}")
+    @Override
+    public ResponseEntity<AnuncioDTO> updateByUser(AnuncioDTO put, Long id) {
+        return null;
+    }
+
+    @DeleteMapping("/anuncios/delete/user/{id}")
+    @Override
+    public ResponseEntity<AnuncioDTO> deleteByUser(AnuncioDTO erase, Long id) {
+        return null;
+    }
 }
 
