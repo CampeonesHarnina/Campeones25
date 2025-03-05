@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 	    private final SolicitudMapper mapper;
 
 	    @Autowired
-	    public SolicitudesServiceImpl(SolicitudRepository repository, SolicitudMapper mapper) {
+	    public SolicitudesServiceImpl(SolicitudRepository repository, @Qualifier("solicitudMapperImpl") SolicitudMapper mapper) {
 	        this.repository = repository;
 	        this.mapper = mapper;
 	    }
@@ -42,7 +43,7 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 	    @Transactional
 	    @Override
 	    public ResponseEntity<SolicitudDTO> put(SolicitudDTO solicitud) {
-	        if (repository.existsById(solicitud.idSolicitud())) {
+	        if (repository.existsById(solicitud.id())) {
 	            repository.save(mapper.mapToEntity(solicitud));
 	            return ResponseEntity.ok(solicitud);
 	        } else {

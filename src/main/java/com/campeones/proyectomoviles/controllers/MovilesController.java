@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.MovilDTO;
 import com.campeones.proyectomoviles.model.filtros.MovilFiltro;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 public class MovilesController implements GenericController<MovilDTO, MovilFiltro, Long> {
 
@@ -25,26 +27,34 @@ public class MovilesController implements GenericController<MovilDTO, MovilFiltr
 		this.movilesService = movilesService;
 	}
 
+	@GetMapping("/moviles/find")
 	@Override
 	public ResponseEntity<List<MovilDTO>> get() {
 		return movilesService.get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/moviles/new")
 	@Override
-	public ResponseEntity<MovilDTO> post(MovilDTO movilDTO) {
+	public ResponseEntity<MovilDTO> post(@RequestBody MovilDTO movilDTO) {
 		return movilesService.post(movilDTO);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/moviles/update")
 	@Override
-	public ResponseEntity<MovilDTO> put(MovilDTO movilDTO) {
+	public ResponseEntity<MovilDTO> put(@RequestBody MovilDTO movilDTO) {
 		return movilesService.put(movilDTO);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/moviles/delete/{id}")
 	@Override
-	public ResponseEntity<MovilDTO> delete(Long id) {
+	public ResponseEntity<MovilDTO> delete(@RequestParam Long id) {
 		return movilesService.delete(id);
 	}
 
+	@GetMapping("/moviles/filter")
 	@Override
 	public ResponseEntity<List<MovilDTO>> getByFilter(MovilFiltro spec) {
 		Specification<Movil> specification = Specification.where(null);
