@@ -49,7 +49,7 @@ public class Movil {
 	@JoinColumn(name = "procesador_id")
 	private Procesador procesador;
 
-	@OneToMany(mappedBy = "movil", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "movil", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@JsonIgnore

@@ -34,15 +34,7 @@ class AnunciosServiceTest {
     AnuncioDTO anuncioDTO;
     @BeforeEach
     void beforeEach(){
-        Movil movil = new Movil();
-        movil.setModelo("Redmi Note");
-        Usuario usuario = new Usuario();
-        usuario.setNombre("admin");
-        Anuncio anuncio = new Anuncio();
-        anuncio.setUsuario(usuario);
-        anuncio.setMovil(movil);
-        anuncio.setFechaPublicacion(LocalDate.now());
-        anuncioDTO = mapper.mapToDTO(anuncio);
+        anuncioDTO = anunciosService.get().getBody().get(0);
 
     }
     @Test

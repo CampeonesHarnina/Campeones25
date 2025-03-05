@@ -37,7 +37,7 @@ public class Anuncio {
 	@NonNull
 	private Usuario usuario;
 
-	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@JsonIgnore

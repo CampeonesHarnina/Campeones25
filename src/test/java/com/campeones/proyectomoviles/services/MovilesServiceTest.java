@@ -33,10 +33,7 @@ class MovilesServiceTest {
 
 	@BeforeEach
 	void beforeEach(){
-		Movil movil = new Movil();
-		movil.setMarca("Samsung");
-		movil.setModelo("Galaxy S21");
-		movilDTO = movilMapper.mapToDTO(movil);
+		movilDTO = movilesService.get().getBody().get(0);
 	}
 
 	@Test
@@ -48,43 +45,32 @@ class MovilesServiceTest {
 
 	@Test
 	void testPost() {
-//		when(movilesService.post(movilDTO)).thenReturn(ResponseEntity.ok(movilDTO));
 		ResponseEntity<MovilDTO> response = movilesService.post(movilDTO);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
 	@Test
-	void testPostThenPut() {
-		ResponseEntity<MovilDTO> response = movilesService.post(movilDTO);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		Movil movil = movilMapper.mapToEntity(response.getBody());
-		movil.setModelo("Galaxy S22");
+	void testPut() {
+		Movil movil = movilMapper.mapToEntity(movilDTO);
+		movil.setModelo("Galaxy S24 Ultra");
 		ResponseEntity<MovilDTO> response2 = movilesService.put(movilMapper.mapToDTO(movil));
 		assertEquals(HttpStatus.OK, response2.getStatusCode());
 	}
 
 	@Test
-	void testPostThenDelete(){
-		ResponseEntity<MovilDTO> response = movilesService.post(movilDTO);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		ResponseEntity<MovilDTO> response2 = movilesService.delete(response.getBody().id());
+	void testDelete(){
+		ResponseEntity<MovilDTO> response2 = movilesService.delete(movilDTO.id());
 		assertEquals(HttpStatus.OK, response2.getStatusCode());
 	}
 
 	@Test
-	void testPostThenFilter() {
-//		when(movilesService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<MovilDTO> response = movilesService.post(movilDTO);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-
+	void testFilter() {
 		Specification<Movil> spec = Specification.where(null);
-		spec = spec.and(MovilSpecification.hasMarca("Samsung"));
-		ResponseEntity<List<MovilDTO>> response2 = movilesService.getByFilter(spec);
-		assertNotNull(response2);
-		assertEquals(HttpStatus.OK, response2.getStatusCode());
-		assertFalse(response2.getBody().isEmpty());
+		spec = spec.and(MovilSpecification.hasMarca("Apple"));
+		ResponseEntity<List<MovilDTO>> response = movilesService.getByFilter(spec);
+		assertNotNull(response);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertFalse(response.getBody().isEmpty());
 
 	}
 }
