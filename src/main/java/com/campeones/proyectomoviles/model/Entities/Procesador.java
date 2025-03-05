@@ -9,27 +9,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Procesador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NonNull
 	private String tipo;
-	private int nucleo;
-	private float velocidadMaxima;
+	@NonNull
+	private Integer nucleo;
+	@NonNull
+	private Float velocidadMaxima;
 
 	@OneToMany(mappedBy = "procesador")
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
+	@NonNull
 	private List<Movil> moviles;
 }

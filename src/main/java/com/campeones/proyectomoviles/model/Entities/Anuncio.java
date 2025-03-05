@@ -8,35 +8,39 @@ import com.campeones.proyectomoviles.model.POJO.TipoCambio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Anuncio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NonNull
+	@Enumerated(EnumType.STRING)
 	private Estado estado;
+	@NonNull
+	@Enumerated(EnumType.STRING)
 	private TipoCambio tipoCambio;
+	@NonNull
 	private LocalDate fechaPublicacion;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "movil_id")
+	@NonNull
 	private Movil movil;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "usuario_id")
+	@NonNull
 	private Usuario usuario;
 
-	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.MERGE)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@JsonIgnore
+	@NonNull
 	private List<Solicitud> solicitud;
 }

@@ -7,14 +7,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.campeones.proyectomoviles.mappers.AnuncioMapper;
-import com.campeones.proyectomoviles.mappers.AnuncioMapperImpl;
 import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
-import com.campeones.proyectomoviles.model.DTO.MovilDTO;
-import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
-import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.Entities.Movil;
-import com.campeones.proyectomoviles.model.Entities.Procesador;
 import com.campeones.proyectomoviles.model.Entities.Usuario;
 import com.campeones.proyectomoviles.model.POJO.*;
 import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;

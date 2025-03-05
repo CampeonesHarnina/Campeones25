@@ -8,28 +8,32 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Solicitud {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private LocalDate fechaSolicitud;
-    private int contestada;
+    @NonNull
+    private Boolean contestada;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @NonNull
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Usuario remitente;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @NonNull
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Usuario destinatario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @NonNull
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Anuncio anuncio;
 
 }

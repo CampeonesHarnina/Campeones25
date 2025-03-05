@@ -8,33 +8,40 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Usuario {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private String nombre;
+    @NonNull
     @Column(unique = true)
     private String email;
+    @NonNull
     private String password;
-    private boolean esAdmin;
+    @NonNull
+    private Boolean esAdmin;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
+    @NonNull
     private List<Anuncio> anuncios;
 
-    @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "remitente", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
+    @NonNull
     private List<Solicitud> solicitudesEnviadas;
 
-    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
+    @NonNull
     private List<Solicitud> solicitudesRecibidas;
 }

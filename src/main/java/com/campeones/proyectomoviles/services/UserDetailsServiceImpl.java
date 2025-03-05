@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,13 +30,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// Busca el usuario por email (username es el email en este contexto)
-		com.campeones.proyectomoviles.model.Entities.Usuario user = userRepository.findByEmail(username)
+		Usuario user = userRepository.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario inexistente"));
 
 		// Define los roles basados en el campo esAdmin
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // Todos los usuarios tienen el rol USER
-		if (user.isEsAdmin() == true) {
+		if (user.getEsAdmin()) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // Solo los administradores tienen el rol ADMIN
 		}
 
