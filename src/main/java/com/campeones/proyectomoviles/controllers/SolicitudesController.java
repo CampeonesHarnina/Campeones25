@@ -24,6 +24,7 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         this.solicitudesService = solicitudesService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/solicitudes/find")
     @Override
     public ResponseEntity<List<SolicitudDTO>> get() {
@@ -51,6 +52,7 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         return solicitudesService.delete(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("solicitudes/filter")
     @Override
     public ResponseEntity<List<SolicitudDTO>> getByFilter(SolicitudFiltro spec) {
@@ -76,6 +78,12 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         }
 
         return solicitudesService.getByFilter(specification);
+    }
+
+    @PostMapping("/solicitudes/find/user/{id}")
+    @Override
+    public ResponseEntity<SolicitudDTO> getByUser(Long id) {
+        return null;
     }
 
     @PostMapping("/solicitudes/new/user/{id}")

@@ -13,6 +13,4 @@ import lombok.NoArgsConstructor;
 public class AnuncioFiltro {
 	private Estado estado;
 	private TipoCambio tipoCambio;
-	private Long usuarioId;
-
 }

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserCrudController<T, T1> {
 
+    ResponseEntity<T> getByUser(T1 id);
     ResponseEntity<T> addToUser(T add, T1 id);
 
     ResponseEntity<T> updateByUser(T put, T1 id);
