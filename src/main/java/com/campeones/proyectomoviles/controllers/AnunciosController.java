@@ -60,14 +60,14 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
         if (spec.getTipoCambio() != null) {
             specification = specification.and(AnuncioSpecification.hasTipoCambio(spec.getTipoCambio()));
         }
-
-        if (spec.getUsuarioId() != null) {
-            specification = specification.and(AnuncioSpecification.hasUsuarioId(spec.getUsuarioId()));
-        }
-
         return service.getByFilter(specification);
     }
 
+    @GetMapping("/anuncios/find/user/{id}")
+    @Override
+    public ResponseEntity<AnuncioDTO> getByUser(Long id) {
+        return null;
+    }
 
     @PostMapping("/anuncios/new/user/{id}")
     @Override
