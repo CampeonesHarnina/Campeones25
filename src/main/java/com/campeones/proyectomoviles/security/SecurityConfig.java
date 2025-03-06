@@ -47,6 +47,8 @@ public class SecurityConfig {
 			auth.requestMatchers("/moviles/filter").permitAll();
 			auth.requestMatchers("/procesadores/find").permitAll();
 			auth.requestMatchers("/procesadores/filter").permitAll();
+			auth.requestMatchers("/usuarios/find").permitAll();
+			auth.requestMatchers("/usuarios/new").permitAll();
 			auth.anyRequest().authenticated(); // Requiere autenticación en rutas no públicas
 		}).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilter(jwtAuthenticationFilter)
