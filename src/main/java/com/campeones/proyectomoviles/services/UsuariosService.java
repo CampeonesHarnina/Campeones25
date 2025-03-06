@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
 
+import java.util.List;
+
 public interface UsuariosService {
-	ResponseEntity<UsuarioDTO> get();
+	ResponseEntity<List<UsuarioDTO>> get();
 
 	ResponseEntity<UsuarioDTO> post(UsuarioDTO usuario);
 
