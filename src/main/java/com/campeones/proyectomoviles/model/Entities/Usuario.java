@@ -38,10 +38,4 @@ public class Usuario {
     @NonNull
     private List<Solicitud> solicitudesEnviadas;
 
-    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.MERGE)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonIgnore
-    @NonNull
-    private List<Solicitud> solicitudesRecibidas;
 }

@@ -9,7 +9,5 @@ import com.campeones.proyectomoviles.model.Entities.Solicitud;
 
 public interface SolicitudRepository extends JpaRepository<Solicitud, Long>,JpaSpecificationExecutor<Solicitud> {
 
-	List<Solicitud> findByDestinatarioId(Long id);
-
 	List<Solicitud> findByRemitenteId(Long id);
 }

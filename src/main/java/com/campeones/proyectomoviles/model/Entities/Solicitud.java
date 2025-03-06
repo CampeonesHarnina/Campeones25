@@ -30,10 +30,6 @@ public class Solicitud {
 
     @NonNull
     @ManyToOne(cascade = CascadeType.MERGE)
-    private Usuario destinatario;
-
-    @NonNull
-    @ManyToOne(cascade = CascadeType.MERGE)
     private Anuncio anuncio;
 
 }

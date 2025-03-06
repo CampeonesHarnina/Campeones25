@@ -49,16 +49,16 @@ public class Populaters {
     @PostConstruct
     public void populate() {
         List<Usuario> usuarios = new ArrayList<>(List.of(
-                new Usuario("Juan Pérez", "juan@example.com", "password123", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("María Gómez", "maria@example.com", "securePass", true, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Carlos Rodríguez", "carlos@example.com", "passCarlos", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Ana Torres", "ana@example.com", "torres123", true, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Luis Méndez", "luis@example.com", "luispass", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Laura Sánchez", "laura@example.com", "laura2022", true, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Pedro Fernández", "pedro@example.com", "pedroPass", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Sofía Martínez", "sofia@example.com", "sofiaPass", true, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Elena Ríos", "elena@example.com", "elena123", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario("Ricardo Morales", "ricardo@example.com", "ricardoPass", true, new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
+                new Usuario("Juan Pérez", "juan@example.com", "password123", false, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("María Gómez", "maria@example.com", "securePass", true, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Carlos Rodríguez", "carlos@example.com", "passCarlos", false, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Ana Torres", "ana@example.com", "torres123", true, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Luis Méndez", "luis@example.com", "luispass", false, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Laura Sánchez", "laura@example.com", "laura2022", true, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Pedro Fernández", "pedro@example.com", "pedroPass", false, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Sofía Martínez", "sofia@example.com", "sofiaPass", true, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Elena Ríos", "elena@example.com", "elena123", false, new ArrayList<>(), new ArrayList<>()),
+                new Usuario("Ricardo Morales", "ricardo@example.com", "ricardoPass", true, new ArrayList<>(), new ArrayList<>())
         ));
         List<Procesador> procesadores = new ArrayList<>(List.of(
                 new Procesador("Snapdragon 888", 8, 2.84f, new ArrayList<>()),
@@ -98,16 +98,16 @@ public class Populaters {
 
         ));
         List<Solicitud> solicitudes = new ArrayList<>(List.of(
-                new Solicitud(LocalDate.now().minusDays(5), true, usuarios.get(0), usuarios.get(1), anuncios.get(0)),
-                new Solicitud(LocalDate.now().minusDays(10), false, usuarios.get(1), usuarios.get(0), anuncios.get(1)),
-                new Solicitud(LocalDate.now().minusDays(15), true, usuarios.get(2), usuarios.get(3), anuncios.get(5)),
-                new Solicitud(LocalDate.now().minusDays(20), false, usuarios.get(3), usuarios.get(7), anuncios.get(8)),
-                new Solicitud(LocalDate.now().minusDays(25), true, usuarios.get(4), usuarios.get(7), anuncios.get(8)),
-                new Solicitud(LocalDate.now().minusDays(30), false, usuarios.get(5), usuarios.get(9), anuncios.get(9)),
-                new Solicitud(LocalDate.now().minusDays(35), true, usuarios.get(6), usuarios.get(2), anuncios.get(4)),
-                new Solicitud(LocalDate.now().minusDays(40), false, usuarios.get(7), usuarios.get(9), anuncios.get(9)),
-                new Solicitud(LocalDate.now().minusDays(45), true, usuarios.get(8), usuarios.get(3), anuncios.get(5)),
-                new Solicitud( LocalDate.now().minusDays(50), false, usuarios.get(9), usuarios.get(1), anuncios.get(2))
+                new Solicitud(LocalDate.now().minusDays(5), true, usuarios.get(1), anuncios.get(0)),
+                new Solicitud(LocalDate.now().minusDays(10), false, usuarios.get(0), anuncios.get(1)),
+                new Solicitud(LocalDate.now().minusDays(15), true, usuarios.get(3), anuncios.get(5)),
+                new Solicitud(LocalDate.now().minusDays(20), false, usuarios.get(7), anuncios.get(8)),
+                new Solicitud(LocalDate.now().minusDays(25), true, usuarios.get(7), anuncios.get(8)),
+                new Solicitud(LocalDate.now().minusDays(30), false, usuarios.get(9), anuncios.get(9)),
+                new Solicitud(LocalDate.now().minusDays(35), true, usuarios.get(2), anuncios.get(4)),
+                new Solicitud(LocalDate.now().minusDays(40), false, usuarios.get(9), anuncios.get(9)),
+                new Solicitud(LocalDate.now().minusDays(45), true, usuarios.get(3), anuncios.get(5)),
+                new Solicitud( LocalDate.now().minusDays(50), false, usuarios.get(1), anuncios.get(2))
         ));
 
         usuarios.forEach(usuarioRepositoty::saveAndFlush);
