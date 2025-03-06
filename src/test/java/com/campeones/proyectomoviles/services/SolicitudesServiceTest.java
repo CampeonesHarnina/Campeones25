@@ -1,58 +1,81 @@
 package com.campeones.proyectomoviles.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 
-import com.campeones.proyectomoviles.mappers.AnuncioMapper;
-import com.campeones.proyectomoviles.mappers.UsuarioMapper;
-import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
-import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
-import com.campeones.proyectomoviles.model.Entities.Anuncio;
-import com.campeones.proyectomoviles.model.Entities.Usuario;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import com.campeones.proyectomoviles.mappers.SolicitudMapper;
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
+import com.campeones.proyectomoviles.model.Entities.Solicitud;
+import com.campeones.proyectomoviles.model.specifications.SolicitudSpecification;
+import com.campeones.proyectomoviles.repositories.SolicitudRepository;
 
 @SpringBootTest
 class SolicitudesServiceTest {
 
-	@MockitoBean
-	SolicitudesServiceImpl solicitudesService;
-	@Autowired
-	private UsuarioMapper usuarioMapper;
-	@Autowired
-	private AnuncioMapper anuncioMapper;
+    @Autowired
+    SolicitudesServiceImpl solicitudesService;
 
-	private SolicitudDTO solicitudDTO;
+    @Qualifier("solicitudMapperImpl")
+    @Autowired
+    private SolicitudMapper solicitudMapper;
 
-	@BeforeEach
-	void beforeEach(){
-		Usuario user = new Usuario();
-		Anuncio anuncio = new Anuncio();
-		UsuarioDTO usuarioDTO = usuarioMapper.mapToDTO(user);
-		AnuncioDTO anuncioDTO = anuncioMapper.mapToDTO(anuncio);
-		solicitudDTO = new SolicitudDTO(1L, null, false, usuarioDTO, anuncioDTO);
-	}
-	@Test
-	void testPost() {
-		when(solicitudesService.post(solicitudDTO)).thenReturn(ResponseEntity.ok(solicitudDTO));
-		ResponseEntity<SolicitudDTO> response = solicitudesService.post(solicitudDTO);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-	}
+    @Autowired // Inyecta el repositorio aquí
+    private SolicitudRepository solicitudRepository;
 
-	@Test
-	void testGetByFilter() {
-		when(solicitudesService.getByFilter(null)).thenReturn(ResponseEntity.ok().build());
-		ResponseEntity<?> response = solicitudesService.getByFilter(null);
-		assertNotNull(response);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-	}
+    private SolicitudDTO solicitudDTO;
 
+    @BeforeEach
+    void beforeEach() {
+        solicitudDTO = solicitudesService.get().getBody().get(0);
+    }
+
+    @Test
+    void testGet() {
+        ResponseEntity<List<SolicitudDTO>> responseEntity = solicitudesService.get();
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void testPost() {
+        ResponseEntity<SolicitudDTO> post = solicitudesService.post(solicitudDTO);
+        assertEquals(HttpStatus.OK, post.getStatusCode());
+    }
+
+    @Test
+    void testPut() {
+        // Usar el repositorio para obtener la entidad existente
+        Solicitud solicitud = solicitudRepository.findById(solicitudDTO.getId()).orElseThrow();
+        solicitud.setContestada(true);
+        ResponseEntity<SolicitudDTO> put = solicitudesService.put(solicitudMapper.mapToDTO(solicitud));
+        assertEquals(HttpStatus.OK, put.getStatusCode());
+    }
+
+    @Test
+    void testDelete() {
+        ResponseEntity<SolicitudDTO> delete = solicitudesService.delete(solicitudDTO.getId());
+        assertEquals(HttpStatus.OK, delete.getStatusCode());
+    }
+
+    @Test
+    void testFilter() {
+        Specification<Solicitud> spec = Specification.where(null);
+        spec = spec.and(SolicitudSpecification.hasContestada(true));
+        ResponseEntity<List<SolicitudDTO>> byFilter = solicitudesService.getByFilter(spec);
+        assertNotNull(byFilter);
+        assertEquals(HttpStatus.OK, byFilter.getStatusCode());
+        assertFalse(byFilter.getBody().isEmpty());
+    }
 }

@@ -2,6 +2,22 @@ package com.campeones.proyectomoviles.model.DTO;
 
 import java.time.LocalDate;
 
-public record SolicitudDTO(Long id, LocalDate fechaSolicitud, boolean contestada, UsuarioDTO remitente,
-                           AnuncioDTO anuncio) {
+import lombok.Data;
+
+@Data
+public class SolicitudDTO {
+    private Long id;
+    private LocalDate fechaSolicitud;
+    private Boolean contestada;
+    private Long remitenteId; // ID del usuario remitente
+    private Long anuncioId;   // ID del anuncio
+
+    // Métodos necesarios para el servicio
+    public Long getRemitenteId() {
+        return remitenteId;
+    }
+
+    public Long getAnuncioId() {
+        return anuncioId;
+    }
 }

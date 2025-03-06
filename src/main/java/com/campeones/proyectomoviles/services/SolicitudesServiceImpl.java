@@ -12,61 +12,95 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.campeones.proyectomoviles.mappers.SolicitudMapper;
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
+import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
+import com.campeones.proyectomoviles.model.Entities.Usuario;
+import com.campeones.proyectomoviles.repositories.AnuncioRepository;
 import com.campeones.proyectomoviles.repositories.SolicitudRepository;
+import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 
 @Service
 public class SolicitudesServiceImpl implements SolicitudesService {
-	 private final SolicitudRepository repository;
-	    private final SolicitudMapper mapper;
 
-	    @Autowired
-	    public SolicitudesServiceImpl(SolicitudRepository repository, @Qualifier("solicitudMapperImpl") SolicitudMapper mapper) {
-	        this.repository = repository;
-	        this.mapper = mapper;
-	    }
+	private final SolicitudRepository solicitudRepository;
+	private final SolicitudMapper solicitudMapper;
+	private final UsuarioRepository usuarioRepository;
+	private final AnuncioRepository anuncioRepository;
 
-	    @Override
-	    public ResponseEntity<List<SolicitudDTO>> get() {
-	        return ResponseEntity.ok(repository.findAll().stream()
-	                .map(mapper::mapToDTO)
-	                .collect(Collectors.toList()));
-	    }
+	@Autowired
+	public SolicitudesServiceImpl(SolicitudRepository solicitudRepository,
+			@Qualifier("solicitudMapperImpl") SolicitudMapper solicitudMapper, UsuarioRepository usuarioRepository,
+			AnuncioRepository anuncioRepository) {
+		this.solicitudRepository = solicitudRepository;
+		this.solicitudMapper = solicitudMapper;
+		this.usuarioRepository = usuarioRepository;
+		this.anuncioRepository = anuncioRepository;
+	}
 
-	    @Transactional
-	    @Override
-	    public ResponseEntity<SolicitudDTO> post(SolicitudDTO solicitud) {
-	        Solicitud save = repository.save(mapper.mapToEntity(solicitud));
-	        return ResponseEntity.ok(mapper.mapToDTO(save));
-	    }
+	@Override
+	public ResponseEntity<List<SolicitudDTO>> get() {
+		return ResponseEntity
+				.ok(solicitudRepository.findAll().stream().map(solicitudMapper::mapToDTO).collect(Collectors.toList()));
+	}
 
-	    @Transactional
-	    @Override
-	    public ResponseEntity<SolicitudDTO> put(SolicitudDTO solicitud) {
-	        if (repository.existsById(solicitud.id())) {
-	            repository.save(mapper.mapToEntity(solicitud));
-	            return ResponseEntity.ok(solicitud);
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
+	@Transactional
+	@Override
+	public ResponseEntity<SolicitudDTO> post(SolicitudDTO solicitudDTO) {
+		Solicitud solicitud = new Solicitud();
+		// Mapear solo los campos simples
+		solicitud.setFechaSolicitud(solicitudDTO.getFechaSolicitud());
+		solicitud.setContestada(solicitudDTO.getContestada());
+		// Reutilizar entidades existentes para evitar duplicados
+		Usuario remitente = usuarioRepository.findById(solicitudDTO.getRemitenteId())
+				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+		Anuncio anuncio = anuncioRepository.findById(solicitudDTO.getAnuncioId())
+				.orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+		solicitud.setRemitente(remitente);
+		solicitud.setAnuncio(anuncio);
 
-	    @Transactional
-	    @Override
-	    public ResponseEntity<SolicitudDTO> delete(long id) {
-	        if (repository.existsById(id)) {
-	            repository.deleteById(id);
-	            return ResponseEntity.ok().build();
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
+		Solicitud saved = solicitudRepository.save(solicitud);
+		return ResponseEntity.ok(solicitudMapper.mapToDTO(saved));
+	}
 
-	    @Override
-	    public ResponseEntity<List<SolicitudDTO>> getByFilter(Specification<Solicitud> spec) {
-	        return ResponseEntity.ok(repository.findAll(spec).stream()
-	                .map(mapper::mapToDTO)
-	                .collect(Collectors.toList()));
-	    }
+	@Transactional
+	@Override
+	public ResponseEntity<SolicitudDTO> put(SolicitudDTO solicitudDTO) {
+		if (solicitudRepository.existsById(solicitudDTO.getId())) {
+			// Obtener la entidad existente
+			Solicitud solicitud = solicitudRepository.findById(solicitudDTO.getId())
+					.orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
+			// Actualizar solo los campos necesarios
+			solicitud.setFechaSolicitud(solicitudDTO.getFechaSolicitud());
+			solicitud.setContestada(solicitudDTO.getContestada());
+			// Reutilizar entidades existentes
+			Usuario remitente = usuarioRepository.findById(solicitudDTO.getRemitenteId())
+					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+			Anuncio anuncio = anuncioRepository.findById(solicitudDTO.getAnuncioId())
+					.orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+			solicitud.setRemitente(remitente);
+			solicitud.setAnuncio(anuncio);
 
+			Solicitud updated = solicitudRepository.save(solicitud);
+			return ResponseEntity.ok(solicitudMapper.mapToDTO(updated));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@Transactional
+	@Override
+	public ResponseEntity<SolicitudDTO> delete(long id) {
+		if (solicitudRepository.existsById(id)) {
+			solicitudRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@Override
+	public ResponseEntity<List<SolicitudDTO>> getByFilter(Specification<Solicitud> spec) {
+		return ResponseEntity.ok(
+				solicitudRepository.findAll(spec).stream().map(solicitudMapper::mapToDTO).collect(Collectors.toList()));
+	}
 }

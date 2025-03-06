@@ -17,7 +17,7 @@ public class SolicitudSpecification {
 				fechaMax);
 	}
 
-	public static Specification<Solicitud> hasContestada(int contestada) {
+	public static Specification<Solicitud> hasContestada(Boolean contestada) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("contestada"),
 				contestada);
 	}
