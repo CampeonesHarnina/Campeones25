@@ -8,7 +8,8 @@
     {
       "name": "jwt.secret.key",
       "type": "java.lang.String",
-      "description": "Clave secreta en Base64 usada para firmar y verificar tokens JWT."
+      "description": "Clave secreta en Base64 usada para firmar y verificar tokens JWT.
+      Se debe de hacer una clave con mínimo 32 bits: openssl rand -base64 32 --> en la terminal"
     }
   ]
 }
