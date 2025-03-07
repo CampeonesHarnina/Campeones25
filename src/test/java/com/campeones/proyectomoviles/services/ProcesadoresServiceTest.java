@@ -65,12 +65,12 @@ class ProcesadoresServiceTest {
 
 	@Test
 	void testFilter() {
-	    Specification<Procesador> spec = Specification.where(null);
-	    spec = spec.and(ProcesadorSpecification.hasTipo("Apple A15 Bionic"));
-	    ResponseEntity<List<ProcesadorDTO>> byFilter = procesadoresService.getByFilter(spec);
-	    assertNotNull(byFilter);
-	    assertEquals(HttpStatus.OK, byFilter.getStatusCode());
-	    assertFalse(byFilter.getBody().isEmpty());
+		Specification<Procesador> spec = Specification.where(null);
+		spec = spec.and(ProcesadorSpecification.hasTipo("Apple A15 Bionic"));
+		ResponseEntity<List<ProcesadorDTO>> byFilter = procesadoresService.getByFilter(spec);
+		assertNotNull(byFilter);
+		assertEquals(HttpStatus.OK, byFilter.getStatusCode());
+		assertFalse(byFilter.getBody().isEmpty());
 	}
 
 }

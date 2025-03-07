@@ -23,7 +23,6 @@ import com.campeones.proyectomoviles.model.specifications.MovilSpecification;
 @SpringBootTest
 class MovilesServiceTest {
 
-//	@MockitoBean
 	@Autowired
 	MovilesServiceImpl movilesService;
 	@Qualifier("movilMapperImpl")

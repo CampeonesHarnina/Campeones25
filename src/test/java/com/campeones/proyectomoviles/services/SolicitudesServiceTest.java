@@ -24,58 +24,57 @@ import com.campeones.proyectomoviles.repositories.SolicitudRepository;
 @SpringBootTest
 class SolicitudesServiceTest {
 
-    @Autowired
-    SolicitudesServiceImpl solicitudesService;
+	@Autowired
+	SolicitudesServiceImpl solicitudesService;
 
-    @Qualifier("solicitudMapperImpl")
-    @Autowired
-    private SolicitudMapper solicitudMapper;
+	@Qualifier("solicitudMapperImpl")
+	@Autowired
+	private SolicitudMapper solicitudMapper;
 
-    @Autowired // Inyecta el repositorio aquí
-    private SolicitudRepository solicitudRepository;
+	@Autowired
+	private SolicitudRepository solicitudRepository;
 
-    private SolicitudDTO solicitudDTO;
+	private SolicitudDTO solicitudDTO;
 
-    @BeforeEach
-    void beforeEach() {
-        solicitudDTO = solicitudesService.get().getBody().get(0);
-    }
+	@BeforeEach
+	void beforeEach() {
+		solicitudDTO = solicitudesService.get().getBody().get(0);
+	}
 
-    @Test
-    void testGet() {
-        ResponseEntity<List<SolicitudDTO>> responseEntity = solicitudesService.get();
-        assertNotNull(responseEntity);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
+	@Test
+	void testGet() {
+		ResponseEntity<List<SolicitudDTO>> responseEntity = solicitudesService.get();
+		assertNotNull(responseEntity);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
 
-    @Test
-    void testPost() {
-        ResponseEntity<SolicitudDTO> post = solicitudesService.post(solicitudDTO);
-        assertEquals(HttpStatus.OK, post.getStatusCode());
-    }
+	@Test
+	void testPost() {
+		ResponseEntity<SolicitudDTO> post = solicitudesService.post(solicitudDTO);
+		assertEquals(HttpStatus.OK, post.getStatusCode());
+	}
 
-    @Test
-    void testPut() {
-        // Usar el repositorio para obtener la entidad existente
-        Solicitud solicitud = solicitudRepository.findById(solicitudDTO.getId()).orElseThrow();
-        solicitud.setContestada(true);
-        ResponseEntity<SolicitudDTO> put = solicitudesService.put(solicitudMapper.mapToDTO(solicitud));
-        assertEquals(HttpStatus.OK, put.getStatusCode());
-    }
+	@Test
+	void testPut() {
+		Solicitud solicitud = solicitudRepository.findById(solicitudDTO.getId()).orElseThrow();
+		solicitud.setContestada(true);
+		ResponseEntity<SolicitudDTO> put = solicitudesService.put(solicitudMapper.mapToDTO(solicitud));
+		assertEquals(HttpStatus.OK, put.getStatusCode());
+	}
 
-    @Test
-    void testDelete() {
-        ResponseEntity<SolicitudDTO> delete = solicitudesService.delete(solicitudDTO.getId());
-        assertEquals(HttpStatus.OK, delete.getStatusCode());
-    }
+	@Test
+	void testDelete() {
+		ResponseEntity<SolicitudDTO> delete = solicitudesService.delete(solicitudDTO.getId());
+		assertEquals(HttpStatus.OK, delete.getStatusCode());
+	}
 
-    @Test
-    void testFilter() {
-        Specification<Solicitud> spec = Specification.where(null);
-        spec = spec.and(SolicitudSpecification.hasContestada(true));
-        ResponseEntity<List<SolicitudDTO>> byFilter = solicitudesService.getByFilter(spec);
-        assertNotNull(byFilter);
-        assertEquals(HttpStatus.OK, byFilter.getStatusCode());
-        assertFalse(byFilter.getBody().isEmpty());
-    }
+	@Test
+	void testFilter() {
+		Specification<Solicitud> spec = Specification.where(null);
+		spec = spec.and(SolicitudSpecification.hasContestada(true));
+		ResponseEntity<List<SolicitudDTO>> byFilter = solicitudesService.getByFilter(spec);
+		assertNotNull(byFilter);
+		assertEquals(HttpStatus.OK, byFilter.getStatusCode());
+		assertFalse(byFilter.getBody().isEmpty());
+	}
 }
