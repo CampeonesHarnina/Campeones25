@@ -2,6 +2,7 @@ package com.campeones.proyectomoviles.model.specifications;
 
 import java.time.LocalDate;
 
+import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
@@ -22,16 +23,12 @@ public class SolicitudSpecification {
 				contestada);
 	}
 
-	public static Specification<Solicitud> hasRemitente(Long remitente) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("remitente_id"),
+	public static Specification<Solicitud> hasRemitente(Usuario remitente) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("remitente"),
 				remitente);
 	}
-	public static Specification<Solicitud> hasDestinatario(Long destinatario) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("destinatario_id"),
-				destinatario);
-	}
 	public static Specification<Solicitud> hasAnuncio(Long anuncio) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("anuncio_id"),
+		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("anuncio_id"),
 				anuncio);
 	}
 }

@@ -19,13 +19,13 @@ public class Usuario {
     private String password;
     private Boolean esAdmin;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
     private List<Anuncio> anuncios;
 
-    @OneToMany(mappedBy = "remitente", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "remitente", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
@@ -38,5 +38,9 @@ public class Usuario {
         this.esAdmin = esAdmin;
         this.anuncios = anuncios;
         this.solicitudesEnviadas = solicitudesEnviadas;
+    }
+
+    public void removeAnuncio(Anuncio anuncio) {
+        anuncios.remove(anuncio);
     }
 }

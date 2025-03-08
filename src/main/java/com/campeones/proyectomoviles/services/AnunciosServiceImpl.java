@@ -10,6 +10,7 @@ import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 import com.campeones.proyectomoviles.security.JwtUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AnunciosServiceImpl implements AnunciosService {
     private JwtUtils jwtUtils;
 
     @Autowired
-    public AnunciosServiceImpl(UsuarioRepository usuarioRepository, AnuncioMapper mapper, AnuncioRepository repository, JwtUtils jwtUtils) {
+    public AnunciosServiceImpl(UsuarioRepository usuarioRepository, @Qualifier("anuncioMapperImpl") AnuncioMapper mapper, AnuncioRepository repository, JwtUtils jwtUtils) {
         this.usuarioRepository = usuarioRepository;
         this.mapper = mapper;
         this.repository = repository;
@@ -66,7 +67,7 @@ public class AnunciosServiceImpl implements AnunciosService {
         if (repository.existsById(id)) {
             Anuncio anuncio = repository.findById(id).get();
             repository.delete(anuncio);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(mapper.mapToDTO(anuncio));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -104,7 +105,7 @@ public class AnunciosServiceImpl implements AnunciosService {
             return ResponseEntity.ok(mapper.mapToDTO(save));
         });
     }
-
+    @Transactional
     @Override
     public ResponseEntity<AnuncioDTO> borrarAnuncioUsuario(Long id, String token) {
         Optional<ResponseEntity> validaciones = validar(token);
@@ -121,10 +122,7 @@ public class AnunciosServiceImpl implements AnunciosService {
             }
 
             repository.delete(anuncio);
-            List<Anuncio> anuncios = usuario.getAnuncios();
-            anuncios.remove(anuncio);
-            usuario.setAnuncios(anuncios);
-            usuarioRepository.save(usuario);
+            repository.flush();
             return ResponseEntity.ok(mapper.mapToDTO(anuncio));
         });
     }

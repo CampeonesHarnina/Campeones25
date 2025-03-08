@@ -31,7 +31,7 @@ public class Anuncio {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.REMOVE)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@JsonIgnore
@@ -45,4 +45,5 @@ public class Anuncio {
 		this.usuario = usuario;
 		this.solicitud = solicitud;
 	}
+
 }
