@@ -56,7 +56,7 @@ public class MovilesController implements GenericController<MovilDTO, MovilFiltr
 
 	@GetMapping("/moviles/filter")
 	@Override
-	public ResponseEntity<List<MovilDTO>> getByFilter(MovilFiltro spec) {
+	public ResponseEntity<List<MovilDTO>> getByFilter(@RequestBody MovilFiltro spec) {
 		Specification<Movil> specification = Specification.where(null);
 		if (spec.getMarca() != null) {
 			specification = specification.and(MovilSpecification.hasMarca(spec.getMarca()));

@@ -65,6 +65,9 @@ public class MovilesServiceImpl implements MovilesService {
 
     @Override
     public ResponseEntity<List<MovilDTO>> getByFilter(Specification<Movil> spec) {
+        if (spec == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(repository.findAll(spec).stream()
                 .map(mapper::mapToDTO)
                 .collect(Collectors.toList()));

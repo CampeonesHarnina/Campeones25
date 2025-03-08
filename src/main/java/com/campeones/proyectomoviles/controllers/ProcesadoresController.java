@@ -52,7 +52,7 @@ public class ProcesadoresController implements GenericController<ProcesadorDTO, 
 	}
 
 	@Override
-	public ResponseEntity<List<ProcesadorDTO>> getByFilter(ProcesadorFiltro spec) {
+	public ResponseEntity<List<ProcesadorDTO>> getByFilter(@RequestBody ProcesadorFiltro spec) {
 		Specification<Procesador> specification = Specification.where(null);
 
 	    if (spec.getTipo() != null) {

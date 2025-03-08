@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
+@RequestMapping("/usuarios")
 @RestController
 public class UsuariosController implements GenericController<UsuarioDTO, Void, Long> {
 

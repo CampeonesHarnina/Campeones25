@@ -55,7 +55,7 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("solicitudes/filter")
     @Override
-    public ResponseEntity<List<SolicitudDTO>> getByFilter(SolicitudFiltro spec) {
+    public ResponseEntity<List<SolicitudDTO>> getByFilter(@RequestBody SolicitudFiltro spec) {
         Specification<Solicitud> specification = Specification.where(null);
 
         if (spec.getFechaMin() != null) {
@@ -80,27 +80,53 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         return solicitudesService.getByFilter(specification);
     }
 
-    @PostMapping("/solicitudes/find/user/{id}")
-    @Override
-    public ResponseEntity<SolicitudDTO> getByUser(Long id) {
+
+    @GetMapping("/solicitudes/find/user/sent/{id}")
+    public ResponseEntity<SolicitudDTO> getByUserSent(@RequestParam Long id, @RequestHeader("Authorization") String token) {
         return null;
     }
 
-    @PostMapping("/solicitudes/new/user/{id}")
+//    @GetMapping("/solicitudes/find/user/received/{id}")
+//    @Override
+//    public ResponseEntity<List<SolicitudDTO>> getByUser(@RequestParam Long id, @RequestHeader("Authorization") String token) {
+//        return null;
+//    }
+//
+//    @PostMapping("/solicitudes/new/user/{id}")
+//    @Override
+//    public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, @RequestParam Long id, @RequestHeader("Authorization") String token) {
+//        return null;
+//    }
+//
+//    @PutMapping("/solicitudes/update/user/{id}")
+//    @Override
+//    public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, @RequestParam Long id, @RequestHeader("Authorization") String token) {
+//        return null;
+//    }
+//
+//    @DeleteMapping(value = "/solicitudes/delete/user/{id}")
+//    @Override
+//    public ResponseEntity<SolicitudDTO> deleteByUser(SolicitudDTO erase, @RequestParam Long id, @RequestHeader("Authorization") String token) {
+//        return null;
+//    }
+
     @Override
-    public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, Long id) {
+    public ResponseEntity<List<SolicitudDTO>> getByUser(String token) {
         return null;
     }
 
-    @PutMapping("/solicitudes/update/user/{id}")
     @Override
-    public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, Long id) {
+    public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, String token) {
         return null;
     }
 
-    @DeleteMapping(value = "/solicitudes/delete/user/{id}")
     @Override
-    public ResponseEntity<SolicitudDTO> deleteByUser(SolicitudDTO erase, Long id) {
+    public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, String token) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<SolicitudDTO> deleteByUser(Long erase, String token) {
         return null;
     }
 }

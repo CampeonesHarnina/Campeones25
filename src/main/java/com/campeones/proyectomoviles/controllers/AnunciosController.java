@@ -4,10 +4,13 @@ import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.filtros.AnuncioFiltro;
 import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
+import com.campeones.proyectomoviles.security.JwtUtils;
 import com.campeones.proyectomoviles.services.AnunciosServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +21,10 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
 
     private AnunciosServiceImpl service;
 
+    @Autowired
     public AnunciosController(AnunciosServiceImpl service) {
         this.service = service;
     }
-
 
     @GetMapping("/anuncios/find")
     @Override
@@ -52,7 +55,7 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
 
     @GetMapping("/anuncios/filter")
     @Override
-    public ResponseEntity<List<AnuncioDTO>> getByFilter(AnuncioFiltro spec) {
+    public ResponseEntity<List<AnuncioDTO>> getByFilter(@RequestBody AnuncioFiltro spec) {
         Specification<Anuncio> specification = Specification.where(null);
         if (spec.getEstado() != null) {
             specification = specification.and(AnuncioSpecification.hasEstado(spec.getEstado()));
@@ -63,28 +66,25 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
         return service.getByFilter(specification);
     }
 
-    @GetMapping("/anuncios/find/user/{id}")
+    @GetMapping("/anuncios/find/user")
     @Override
-    public ResponseEntity<AnuncioDTO> getByUser(Long id) {
-        return null;
+    public ResponseEntity<List<AnuncioDTO>> getByUser(@RequestHeader("Authorization") String token) {
+        return service.getAnunciosUsuario(token);
     }
-
-    @PostMapping("/anuncios/new/user/{id}")
+    @PostMapping("/anuncios/new/user")
     @Override
-    public ResponseEntity<AnuncioDTO> addToUser(AnuncioDTO add, Long id) {
-        return null;
+    public ResponseEntity<AnuncioDTO> addToUser(AnuncioDTO add, @RequestHeader("Authorization") String token) {
+        return service.agregarAnuncioUsuario(add,token);
     }
-
-    @PutMapping("/anuncios/update/user/{id}")
+    @PutMapping("/anuncios/update/user")
     @Override
-    public ResponseEntity<AnuncioDTO> updateByUser(AnuncioDTO put, Long id) {
-        return null;
+    public ResponseEntity<AnuncioDTO> updateByUser(AnuncioDTO put, @RequestHeader("Authorization") String token) {
+        return service.actualizarAnuncioUsuario(put,token);
     }
-
-    @DeleteMapping("/anuncios/delete/user/{id}")
+    @DeleteMapping("/anuncios/delete/{id}/user")
     @Override
-    public ResponseEntity<AnuncioDTO> deleteByUser(AnuncioDTO erase, Long id) {
-        return null;
+    public ResponseEntity<AnuncioDTO> deleteByUser(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        return service.borrarAnuncioUsuario(id,token);
     }
 }
 

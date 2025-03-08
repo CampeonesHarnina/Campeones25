@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.campeones.proyectomoviles.controllers.UserCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,7 +21,7 @@ import com.campeones.proyectomoviles.repositories.SolicitudRepository;
 import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 
 @Service
-public class SolicitudesServiceImpl implements SolicitudesService {
+public class SolicitudesServiceImpl implements SolicitudesService{
 
 	private final SolicitudRepository solicitudRepository;
 	private final SolicitudMapper solicitudMapper;
@@ -102,5 +103,22 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 	public ResponseEntity<List<SolicitudDTO>> getByFilter(Specification<Solicitud> spec) {
 		return ResponseEntity.ok(
 				solicitudRepository.findAll(spec).stream().map(solicitudMapper::mapToDTO).collect(Collectors.toList()));
+	}
+
+
+	public ResponseEntity<SolicitudDTO> getByUser(Long id) {
+		return null;
+	}
+
+	public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, Long id) {
+		return null;
+	}
+
+	public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, Long id) {
+		return null;
+	}
+
+	public ResponseEntity<SolicitudDTO> deleteByUser(SolicitudDTO erase, Long id) {
+		return null;
 	}
 }
