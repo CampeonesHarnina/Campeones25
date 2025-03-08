@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-public class SolicitudesController implements GenericController<SolicitudDTO, SolicitudFiltro, Long>, UserCrudController<SolicitudDTO, Long> {
+public class SolicitudesFilterController implements GenericFilterController<SolicitudDTO, SolicitudFiltro, Long>, UserCrudController<SolicitudDTO, Long> {
     private final SolicitudesServiceImpl solicitudesService;
 
     @Autowired
-    public SolicitudesController(SolicitudesServiceImpl solicitudesService) {
+    public SolicitudesFilterController(SolicitudesServiceImpl solicitudesService) {
         this.solicitudesService = solicitudesService;
     }
 
@@ -52,10 +52,9 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         return solicitudesService.delete(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("solicitudes/filter")
     @Override
-    public ResponseEntity<List<SolicitudDTO>> getByFilter(SolicitudFiltro spec) {
+    public ResponseEntity<List<SolicitudDTO>> getByFilter(@RequestBody SolicitudFiltro spec) {
         Specification<Solicitud> specification = Specification.where(null);
 
         if (spec.getFechaMin() != null) {
@@ -67,12 +66,6 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         if (spec.getContestada() != null) {
             specification = specification.and(SolicitudSpecification.hasContestada(spec.getContestada()));
         }
-        if (spec.getRemitente() != null) {
-            specification = specification.and(SolicitudSpecification.hasRemitente(spec.getRemitente()));
-        }
-        if (spec.getDestinatario() != null) {
-            specification = specification.and(SolicitudSpecification.hasDestinatario(spec.getDestinatario()));
-        }
         if (spec.getAnuncio() != null) {
             specification = specification.and(SolicitudSpecification.hasAnuncio(spec.getAnuncio()));
         }
@@ -80,27 +73,32 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         return solicitudesService.getByFilter(specification);
     }
 
-    @PostMapping("/solicitudes/find/user/{id}")
+    @GetMapping("/solicitudes/find/user/received")
     @Override
-    public ResponseEntity<SolicitudDTO> getByUser(Long id) {
-        return null;
+    public ResponseEntity<List<SolicitudDTO>> getByUser(@RequestHeader("Authorization") String token) {
+        return solicitudesService.getByUser(token);
     }
 
-    @PostMapping("/solicitudes/new/user/{id}")
-    @Override
-    public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, Long id) {
-        return null;
+    @GetMapping("/solicitudes/find/user/sent")
+    public ResponseEntity<List<SolicitudDTO>> getByUserSent(@RequestHeader("Authorization") String token) {
+        return solicitudesService.getEnviadasByUser(token);
     }
 
-    @PutMapping("/solicitudes/update/user/{id}")
+    @PostMapping("/solicitudes/new/user")
     @Override
-    public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, Long id) {
-        return null;
+    public ResponseEntity<SolicitudDTO> addToUser(@RequestBody SolicitudDTO add, @RequestHeader("Authorization") String token) {
+        return solicitudesService.addToUser(add,token);
     }
 
-    @DeleteMapping(value = "/solicitudes/delete/user/{id}")
+    @PutMapping("/solicitudes/update/user")
     @Override
-    public ResponseEntity<SolicitudDTO> deleteByUser(SolicitudDTO erase, Long id) {
-        return null;
+    public ResponseEntity<SolicitudDTO> updateByUser(@RequestBody SolicitudDTO put, @RequestHeader("Authorization") String token) {
+        return solicitudesService.updateByUser(put, token);
+    }
+
+    @DeleteMapping(value = "/solicitudes/delete/{id}/user")
+    @Override
+    public ResponseEntity<SolicitudDTO> deleteByUser(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        return solicitudesService.deleteByUser(id, token);
     }
 }

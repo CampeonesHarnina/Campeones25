@@ -1,19 +1,15 @@
 package com.campeones.proyectomoviles.controllers;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
-public interface GenericController<R, S, I> {
+import java.util.List;
 
-	ResponseEntity<List<R>> get();
+public interface GenericController<K, V> {
+    ResponseEntity<List<K>> get();
 
-	ResponseEntity<R> post(R r);
+    ResponseEntity<K> post(K k);
 
-	ResponseEntity<R> put(R r);
+    ResponseEntity<K> put(K k);
 
-	ResponseEntity<R> delete(I id);
-
-	// Make abstract method with variable number of parameters and generic type
-	ResponseEntity<List<R>> getByFilter(S spec);
+    ResponseEntity<K> delete(V v);
 }

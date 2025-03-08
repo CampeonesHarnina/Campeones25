@@ -13,23 +13,24 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Data
 public class Solicitud {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
     private LocalDate fechaSolicitud;
-    @NonNull
     private Boolean contestada;
 
-    @NonNull
     @ManyToOne(cascade = CascadeType.MERGE)
     private Usuario remitente;
 
-    @NonNull
     @ManyToOne(cascade = CascadeType.MERGE)
     private Anuncio anuncio;
 
+    public Solicitud(LocalDate fechaSolicitud, Boolean contestada, Usuario remitente, Anuncio anuncio) {
+        this.fechaSolicitud = fechaSolicitud;
+        this.contestada = contestada;
+        this.remitente = remitente;
+        this.anuncio = anuncio;
+    }
 }

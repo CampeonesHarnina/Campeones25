@@ -19,23 +19,25 @@ import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Data
 public class Procesador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NonNull
 	private String tipo;
-	@NonNull
 	private Integer nucleo;
-	@NonNull
 	private Float velocidadMaxima;
 
 	@OneToMany(mappedBy = "procesador", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	@NonNull
 	private List<Movil> moviles;
+
+	public Procesador(String tipo, Integer nucleo, Float velocidadMaxima, List<Movil> moviles) {
+		this.tipo = tipo;
+		this.nucleo = nucleo;
+		this.velocidadMaxima = velocidadMaxima;
+		this.moviles = moviles;
+	}
 }

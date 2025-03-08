@@ -8,34 +8,39 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Data
 public class Usuario {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
     private String nombre;
-    @NonNull
     @Column(unique = true)
     private String email;
-    @NonNull
     private String password;
-    @NonNull
     private Boolean esAdmin;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
-    @NonNull
     private List<Anuncio> anuncios;
 
-    @OneToMany(mappedBy = "remitente", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "remitente", orphanRemoval = true, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
-    @NonNull
     private List<Solicitud> solicitudesEnviadas;
 
+    public Usuario(String nombre, String email, String password, Boolean esAdmin, List<Anuncio> anuncios, List<Solicitud> solicitudesEnviadas) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.esAdmin = esAdmin;
+        this.anuncios = anuncios;
+        this.solicitudesEnviadas = solicitudesEnviadas;
+    }
+
+    public void removeAnuncio(Anuncio anuncio) {
+        anuncios.remove(anuncio);
+    }
 }

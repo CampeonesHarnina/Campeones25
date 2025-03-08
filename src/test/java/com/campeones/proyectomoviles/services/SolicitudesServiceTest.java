@@ -56,7 +56,7 @@ class SolicitudesServiceTest {
 
 	@Test
 	void testPut() {
-		Solicitud solicitud = solicitudRepository.findById(solicitudDTO.getId()).orElseThrow();
+		Solicitud solicitud = solicitudRepository.findById(solicitudDTO.id()).orElseThrow();
 		solicitud.setContestada(true);
 		ResponseEntity<SolicitudDTO> put = solicitudesService.put(solicitudMapper.mapToDTO(solicitud));
 		assertEquals(HttpStatus.OK, put.getStatusCode());
@@ -64,7 +64,7 @@ class SolicitudesServiceTest {
 
 	@Test
 	void testDelete() {
-		ResponseEntity<SolicitudDTO> delete = solicitudesService.delete(solicitudDTO.getId());
+		ResponseEntity<SolicitudDTO> delete = solicitudesService.delete(solicitudDTO.id());
 		assertEquals(HttpStatus.OK, delete.getStatusCode());
 	}
 

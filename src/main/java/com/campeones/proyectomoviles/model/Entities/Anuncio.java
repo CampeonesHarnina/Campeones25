@@ -12,35 +12,38 @@ import lombok.*;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Data
 public class Anuncio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NonNull
 	@Enumerated(EnumType.STRING)
 	private Estado estado;
-	@NonNull
 	@Enumerated(EnumType.STRING)
 	private TipoCambio tipoCambio;
-	@NonNull
 	private LocalDate fechaPublicacion;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "movil_id")
-	@NonNull
 	private Movil movil;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "usuario_id")
-	@NonNull
 	private Usuario usuario;
 
-	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "anuncio", cascade = CascadeType.REMOVE)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@JsonIgnore
-	@NonNull
 	private List<Solicitud> solicitud;
+
+	public Anuncio(Estado estado, TipoCambio tipoCambio, LocalDate fechaPublicacion, Movil movil, Usuario usuario, List<Solicitud> solicitud) {
+		this.estado = estado;
+		this.tipoCambio = tipoCambio;
+		this.fechaPublicacion = fechaPublicacion;
+		this.movil = movil;
+		this.usuario = usuario;
+		this.solicitud = solicitud;
+	}
+
 }

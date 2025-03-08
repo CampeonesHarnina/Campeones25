@@ -10,8 +10,6 @@ import com.campeones.proyectomoviles.model.Entities.Solicitud;
 
 @Mapper(componentModel = "spring")
 public interface SolicitudMapper {
-    @Mapping(source = "remitente.id", target = "remitenteId")
-    @Mapping(source = "anuncio.id", target = "anuncioId")
     SolicitudDTO mapToDTO(Solicitud solicitud);
 
     Solicitud mapToEntity(SolicitudDTO solicitudDTO);

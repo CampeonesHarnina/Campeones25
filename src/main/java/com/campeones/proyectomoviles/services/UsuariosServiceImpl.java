@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.campeones.proyectomoviles.controllers.GenericController;
+import com.campeones.proyectomoviles.controllers.GenericFilterController;
 import com.campeones.proyectomoviles.mappers.UsuarioMapper;
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
 import com.campeones.proyectomoviles.model.Entities.Usuario;
@@ -20,14 +21,14 @@ import jakarta.transaction.Transactional;
 
 
 @Service
-public class UsuariosServiceImpl implements GenericController<UsuarioDTO, Void, Long> {
+public class UsuariosServiceImpl implements GenericFilterController<UsuarioDTO, Void, Long> {
 
 	private final UsuarioRepository repository;
 	private final UsuarioMapper mapper;
 	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UsuariosServiceImpl(UsuarioRepository repository, UsuarioMapper mapper, PasswordEncoder passwordEncoder) {
+	public UsuariosServiceImpl(UsuarioRepository repository, @Qualifier("usuarioMapperImpl") UsuarioMapper mapper, PasswordEncoder passwordEncoder) {
 		this.repository = repository;
 		this.mapper = mapper;
 		this.passwordEncoder = passwordEncoder;

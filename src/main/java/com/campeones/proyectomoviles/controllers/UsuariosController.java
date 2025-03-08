@@ -16,8 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
+@RequestMapping("/usuarios")
 @RestController
-public class UsuariosController implements GenericController<UsuarioDTO, Void, Long> {
+public class UsuariosController implements GenericController<UsuarioDTO, Long> {
 
     private final UsuariosServiceImpl usuariosService;
     private final UsuarioRepository usuarioRepository;
@@ -84,10 +85,4 @@ public class UsuariosController implements GenericController<UsuarioDTO, Void, L
         return usuariosService.delete(id);
     }
 
-    // Método de filtrado no implementado
-    @GetMapping("/filter")
-    @Override
-    public ResponseEntity<List<UsuarioDTO>> getByFilter(Void spec) {
-        return ResponseEntity.status(501).build(); // 501 Not Implemented
-    }
 }
