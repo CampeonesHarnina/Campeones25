@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/usuarios")
 public class UsuariosController implements GenericController<UsuarioDTO, Void, Long> {
 
     private final UsuariosServiceImpl usuariosService;
@@ -89,5 +89,20 @@ public class UsuariosController implements GenericController<UsuarioDTO, Void, L
     @Override
     public ResponseEntity<List<UsuarioDTO>> getByFilter(Void spec) {
         return ResponseEntity.status(501).build(); // 501 Not Implemented
+    }
+}
+    @PostMapping("/usuarios/new")
+    public ResponseEntity<UsuarioDTO> post(UsuarioDTO usuario) {
+        return usuariosService.post(usuario);
+    }
+
+    @PutMapping("/usuarios/update")
+    public ResponseEntity<UsuarioDTO> put(UsuarioDTO usuario) {
+        return usuariosService.put(usuario);
+    }
+
+    @DeleteMapping("/usuarios/delete")
+    public ResponseEntity<UsuarioDTO> delete(long id) {
+        return usuariosService.delete(id);
     }
 }
