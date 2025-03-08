@@ -25,80 +25,86 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	private final JwtUtils jwtUtils;
-	private final AuthenticationManager authenticationManager;
-	@Autowired
-	public JwtAuthenticationFilter(JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
-		super();
-		this.jwtUtils = jwtUtils;
-		this.authenticationManager = authenticationManager;
-		setAuthenticationManager(authenticationManager);
-	}
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
-		String email;
-		String password;
-		try {
-			// Lee el cuerpo JSON del request
-			HashMap<String, String> credentials = new ObjectMapper().readValue(request.getInputStream(), HashMap.class);
-			email = credentials.get("email"); // Usamos email como identificador
-			password = credentials.get("password");
+    private final JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
 
-			if (email == null || password == null) {
-				throw new AuthenticationException("Email o contraseña no proporcionados") {
+    @Autowired
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
+        super();
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        setAuthenticationManager(authenticationManager);
+    }
 
-					/**
-					 * 
-					 */
-					private static final long serialVersionUID = 1L;
-				};
-			}
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
+        // Manejar solicitudes OPTIONS (preflight)
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            log.debug("JwtAuthenticationFilter: Ignorando solicitud OPTIONS");
+            return null; // No procesar autenticación para OPTIONS
+        }
 
-			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
-			log.info("JwtAuthenticationFilter: Intentando autenticar a " + email);
-			return getAuthenticationManager().authenticate(authToken);
-		} catch (IOException e) {
-			log.error("JwtAuthenticationFilter: Error al procesar las credenciales", e);
-			throw new AuthenticationException("Error al procesar las credenciales") {
+        String email;
+        String password;
+        try {
+            if (request.getContentLength() <= 0) {
+                log.error("JwtAuthenticationFilter: No se proporcionó cuerpo en la solicitud");
+                throw new AuthenticationException("No se proporcionó cuerpo en la solicitud") {
+                    private static final long serialVersionUID = 1L;
+                };
+            }
 
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-			};
-		}
-	}
+            HashMap<String, String> credentials = new ObjectMapper().readValue(request.getInputStream(), HashMap.class);
+            email = credentials.get("email");
+            password = credentials.get("password");
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
-		User user = (User) authResult.getPrincipal();
-		String accessToken = jwtUtils.generateAccessToken(user.getUsername());
-		String refreshToken = jwtUtils.generateRefreshToken(user);
+            if (email == null || password == null) {
+                throw new AuthenticationException("Email o contraseña no proporcionados") {
+                    private static final long serialVersionUID = 1L;
+                };
+            }
 
-		HashMap<String, Object> responseBody = new HashMap<>();
-		responseBody.put("access_token", accessToken);
-		responseBody.put("refresh_token", refreshToken);
-		responseBody.put("message", "Autenticación correcta");
-		responseBody.put("usuario", user.getUsername());
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
+            log.info("JwtAuthenticationFilter: Intentando autenticar a " + email);
+            return getAuthenticationManager().authenticate(authToken);
+        } catch (IOException e) {
+            log.error("JwtAuthenticationFilter: Error al procesar las credenciales", e);
+            throw new AuthenticationException("Error al procesar las credenciales: " + e.getMessage()) {
+                private static final long serialVersionUID = 1L;
+            };
+        }
+    }
 
-		response.setStatus(HttpStatus.OK.value());
-		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		new ObjectMapper().writeValue(response.getWriter(), responseBody);
-		log.info("JwtAuthenticationFilter: Usuario autenticado: " + user.getUsername());
-	}
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        User user = (User) authResult.getPrincipal();
+        String accessToken = jwtUtils.generateAccessToken(user.getUsername());
+        String refreshToken = jwtUtils.generateRefreshToken(user);
 
-	@Override
-	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException failed) throws IOException, ServletException {
-		HashMap<String, String> errorResponse = new HashMap<>();
-		errorResponse.put("error", "Autenticación fallida: " + failed.getMessage());
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put("access_token", accessToken);
+        responseBody.put("refresh_token", refreshToken);
+        responseBody.put("message", "Autenticación correcta");
+        responseBody.put("usuario", user.getUsername());
 
-		response.setStatus(HttpStatus.UNAUTHORIZED.value());
-		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		new ObjectMapper().writeValue(response.getWriter(), errorResponse);
-		log.warn("JwtAuthenticationFilter: Fallo de autenticación: " + failed.getMessage());
-	}
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getWriter(), responseBody);
+        log.info("JwtAuthenticationFilter: Usuario autenticado: " + user.getUsername());
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        HashMap<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Autenticación fallida: " + failed.getMessage());
+
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getWriter(), errorResponse);
+        log.warn("JwtAuthenticationFilter: Fallo de autenticación: " + failed.getMessage());
+    }
 }

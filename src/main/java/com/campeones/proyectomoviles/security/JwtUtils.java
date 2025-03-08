@@ -20,49 +20,64 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtUtils {
-	@Value("${jwt.secret.key}")
-	private String secretKey;
 
-	@Value("${jwt.time.expiration}")
-	private String timeExpiration;
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
-	public String generateAccessToken(String username) {
-		return Jwts.builder().issuedAt(Date.valueOf(LocalDateTime.now().toLocalDate())).subject(username)
-				.expiration(Date.from(LocalDateTime.now().plusMinutes(Long.parseLong(timeExpiration))
-						.atZone(ZoneId.systemDefault()).toInstant()))
-				.signWith(getSignatureKey()).compact();
-	}
+    @Value("${jwt.time.expiration}")
+    private String timeExpiration;
 
-	public String generateRefreshToken(User user) {
-		return Jwts.builder().subject(user.getUsername()).issuedAt(Date.valueOf(LocalDateTime.now().toLocalDate()))
-				.expiration(Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant()))
-				.signWith(getSignatureKey()).compact();
-	}
+    public String generateAccessToken(String username) {
+        return Jwts.builder()
+                .issuedAt(Date.valueOf(LocalDateTime.now().toLocalDate()))
+                .subject(username)
+                .expiration(Date.from(LocalDateTime.now().plusMinutes(Long.parseLong(timeExpiration))
+                        .atZone(ZoneId.systemDefault()).toInstant()))
+                .signWith(getSignatureKey())
+                .compact();
+    }
 
-	public Boolean isTokenValid(String token) {
-		try {
-			getAllClaims(token);
-			return true;
-		} catch (Exception e) {
-			log.error("JwtUtils: Token inválido: " + e.getMessage());
-			return false;
-		}
-	}
+    public String generateRefreshToken(User user) {
+        return Jwts.builder()
+                .subject(user.getUsername())
+                .issuedAt(Date.valueOf(LocalDateTime.now().toLocalDate()))
+                .expiration(Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant()))
+                .signWith(getSignatureKey())
+                .compact();
+    }
 
-	public String getUserNameFromToken(String token) {
-		return getClaim(token, Claims::getSubject);
-	}
+    public Boolean isTokenValid(String token) {
+        try {
+            getAllClaims(token);
+            return true;
+        } catch (Exception e) {
+            log.error("JwtUtils: Token inválido: " + e.getMessage());
+            return false;
+        }
+    }
 
-	public SecretKey getSignatureKey() {
-		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
-	}
+    public String getUserNameFromToken(String token) {
+        return getClaim(token, Claims::getSubject);
+    }
 
-	private Claims getAllClaims(String token) {
-		return Jwts.parser().verifyWith(getSignatureKey()).build().parseSignedClaims(token).getPayload();
-	}
+    public SecretKey getSignatureKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey); // Asume que la clave está en Base64
+        if (keyBytes.length < 32) {
+            throw new IllegalArgumentException("La clave secreta debe tener al menos 256 bits (32 bytes)");
+        }
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
-	private <T> T getClaim(String token, Function<Claims, T> claimsFunction) {
-		Claims allClaims = getAllClaims(token);
-		return claimsFunction.apply(allClaims);
-	}
+    private Claims getAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSignatureKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private <T> T getClaim(String token, Function<Claims, T> claimsFunction) {
+        Claims allClaims = getAllClaims(token);
+        return claimsFunction.apply(allClaims);
+    }
 }
