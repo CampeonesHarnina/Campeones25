@@ -91,18 +91,3 @@ public class UsuariosController implements GenericController<UsuarioDTO, Void, L
         return ResponseEntity.status(501).build(); // 501 Not Implemented
     }
 }
-    @PostMapping("/usuarios/new")
-    public ResponseEntity<UsuarioDTO> post(UsuarioDTO usuario) {
-        return usuariosService.post(usuario);
-    }
-
-    @PutMapping("/usuarios/update")
-    public ResponseEntity<UsuarioDTO> put(UsuarioDTO usuario) {
-        return usuariosService.put(usuario);
-    }
-
-    @DeleteMapping("/usuarios/delete")
-    public ResponseEntity<UsuarioDTO> delete(long id) {
-        return usuariosService.delete(id);
-    }
-}
