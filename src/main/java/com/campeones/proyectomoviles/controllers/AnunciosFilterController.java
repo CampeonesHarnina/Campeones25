@@ -4,25 +4,23 @@ import com.campeones.proyectomoviles.model.DTO.AnuncioDTO;
 import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.filtros.AnuncioFiltro;
 import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
-import com.campeones.proyectomoviles.security.JwtUtils;
 import com.campeones.proyectomoviles.services.AnunciosServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-public class AnunciosController implements GenericController<AnuncioDTO, AnuncioFiltro, Long>, UserCrudController<AnuncioDTO, Long> {
+public class AnunciosFilterController implements GenericFilterController<AnuncioDTO, AnuncioFiltro, Long>, UserCrudController<AnuncioDTO, Long> {
 
     private AnunciosServiceImpl service;
 
     @Autowired
-    public AnunciosController(AnunciosServiceImpl service) {
+    public AnunciosFilterController(AnunciosServiceImpl service) {
         this.service = service;
     }
 
@@ -40,14 +38,14 @@ public class AnunciosController implements GenericController<AnuncioDTO, Anuncio
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/anuncios/update")
+    @PutMapping("/anuncios/update")
     @Override
     public ResponseEntity<AnuncioDTO> put(@RequestBody AnuncioDTO anuncioDTO) {
         return service.put(anuncioDTO);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/anuncios/delete/{id}")
+    @DeleteMapping("/anuncios/delete/{id}")
     @Override
     public ResponseEntity<AnuncioDTO> delete(@RequestParam Long id) {
         return service.delete(id);

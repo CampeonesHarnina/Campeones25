@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-public class SolicitudesController implements GenericController<SolicitudDTO, SolicitudFiltro, Long>, UserCrudController<SolicitudDTO, Long> {
+public class SolicitudesFilterController implements GenericFilterController<SolicitudDTO, SolicitudFiltro, Long>, UserCrudController<SolicitudDTO, Long> {
     private final SolicitudesServiceImpl solicitudesService;
 
     @Autowired
-    public SolicitudesController(SolicitudesServiceImpl solicitudesService) {
+    public SolicitudesFilterController(SolicitudesServiceImpl solicitudesService) {
         this.solicitudesService = solicitudesService;
     }
 
@@ -52,7 +52,6 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
         return solicitudesService.delete(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("solicitudes/filter")
     @Override
     public ResponseEntity<List<SolicitudDTO>> getByFilter(@RequestBody SolicitudFiltro spec) {
@@ -73,32 +72,6 @@ public class SolicitudesController implements GenericController<SolicitudDTO, So
 
         return solicitudesService.getByFilter(specification);
     }
-
-
-
-//    @GetMapping("/solicitudes/find/user/received/{id}")
-//    @Override
-//    public ResponseEntity<List<SolicitudDTO>> getByUser(@RequestParam Long id, @RequestHeader("Authorization") String token) {
-//        return null;
-//    }
-//
-//    @PostMapping("/solicitudes/new/user/{id}")
-//    @Override
-//    public ResponseEntity<SolicitudDTO> addToUser(SolicitudDTO add, @RequestParam Long id, @RequestHeader("Authorization") String token) {
-//        return null;
-//    }
-//
-//    @PutMapping("/solicitudes/update/user/{id}")
-//    @Override
-//    public ResponseEntity<SolicitudDTO> updateByUser(SolicitudDTO put, @RequestParam Long id, @RequestHeader("Authorization") String token) {
-//        return null;
-//    }
-//
-//    @DeleteMapping(value = "/solicitudes/delete/user/{id}")
-//    @Override
-//    public ResponseEntity<SolicitudDTO> deleteByUser(SolicitudDTO erase, @RequestParam Long id, @RequestHeader("Authorization") String token) {
-//        return null;
-//    }
 
     @GetMapping("/solicitudes/find/user/received")
     @Override

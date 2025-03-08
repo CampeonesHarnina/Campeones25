@@ -2,9 +2,7 @@ package com.campeones.proyectomoviles.controllers;
 
 import java.util.List;
 
-import com.campeones.proyectomoviles.model.Entities.Anuncio;
 import com.campeones.proyectomoviles.model.Entities.Movil;
-import com.campeones.proyectomoviles.model.specifications.AnuncioSpecification;
 import com.campeones.proyectomoviles.model.specifications.MovilSpecification;
 import com.campeones.proyectomoviles.services.MovilesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-public class MovilesController implements GenericController<MovilDTO, MovilFiltro, Long> {
+public class MovilesFilterController implements GenericFilterController<MovilDTO, MovilFiltro, Long> {
 
 	private final MovilesServiceImpl movilesService;
 
 	@Autowired
-	public MovilesController(MovilesServiceImpl movilesService) {
+	public MovilesFilterController(MovilesServiceImpl movilesService) {
 		this.movilesService = movilesService;
 	}
 

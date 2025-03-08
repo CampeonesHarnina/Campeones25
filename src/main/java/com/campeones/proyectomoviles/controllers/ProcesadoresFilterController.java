@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-public class ProcesadoresController implements GenericController<ProcesadorDTO, ProcesadorFiltro, Long> {
+public class ProcesadoresFilterController implements GenericFilterController<ProcesadorDTO, ProcesadorFiltro, Long> {
 	private final ProcesadoresServiceImpl procesadoresService;
 	
 	@Autowired 
-	public ProcesadoresController(ProcesadoresServiceImpl procesadoresService){
+	public ProcesadoresFilterController(ProcesadoresServiceImpl procesadoresService){
 		this.procesadoresService = procesadoresService;
 	}
 	
@@ -51,6 +51,7 @@ public class ProcesadoresController implements GenericController<ProcesadorDTO, 
 		return procesadoresService.delete(id);
 	}
 
+	@GetMapping("/procesadores/filter")
 	@Override
 	public ResponseEntity<List<ProcesadorDTO>> getByFilter(@RequestBody ProcesadorFiltro spec) {
 		Specification<Procesador> specification = Specification.where(null);
