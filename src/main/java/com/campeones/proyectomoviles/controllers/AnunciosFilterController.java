@@ -2,6 +2,8 @@ package com.campeones.proyectomoviles.controllers;
 
 import java.util.List;
 
+import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
+import com.campeones.proyectomoviles.controllers.unimplemented.UserCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;

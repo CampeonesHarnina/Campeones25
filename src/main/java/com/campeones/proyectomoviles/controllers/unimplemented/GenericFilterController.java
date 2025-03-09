@@ -1,4 +1,4 @@
-package com.campeones.proyectomoviles.controllers;
+package com.campeones.proyectomoviles.controllers.unimplemented;
 
 import java.util.List;
 
@@ -14,6 +14,5 @@ public interface GenericFilterController<R, S, I> {
 
 	ResponseEntity<R> delete(I id);
 
-	// Make abstract method with variable number of parameters and generic type
 	ResponseEntity<List<R>> getByFilter(S spec);
 }

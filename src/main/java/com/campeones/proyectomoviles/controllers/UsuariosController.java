@@ -1,12 +1,11 @@
 package com.campeones.proyectomoviles.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.campeones.proyectomoviles.controllers.unimplemented.GenericController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.campeones.proyectomoviles.mappers.UsuarioMapper;
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
-import com.campeones.proyectomoviles.model.Entities.Usuario;
-import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 import com.campeones.proyectomoviles.services.UsuariosServiceImpl;
 
 @CrossOrigin("*")
@@ -29,47 +25,23 @@ import com.campeones.proyectomoviles.services.UsuariosServiceImpl;
 public class UsuariosController implements GenericController<UsuarioDTO, Long> {
 
 	private final UsuariosServiceImpl usuariosService;
-	private final UsuarioRepository usuarioRepository;
-	private final UsuarioMapper usuarioMapper;
-	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UsuariosController(UsuariosServiceImpl usuariosService, UsuarioRepository usuarioRepository,
-			UsuarioMapper usuarioMapper, PasswordEncoder passwordEncoder) {
+	public UsuariosController(UsuariosServiceImpl usuariosService) {
 		this.usuariosService = usuariosService;
-		this.usuarioRepository = usuarioRepository;
-		this.usuarioMapper = usuarioMapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 
-	// Obtener todos los usuarios
 	@GetMapping("/find")
 	@Override
 	public ResponseEntity<List<UsuarioDTO>> get() {
 		return usuariosService.get();
 	}
 
-	// Registrar un nuevo usuario (público)
 	@PostMapping("/register")
 	public ResponseEntity<UsuarioDTO> register(@RequestBody UsuarioDTO usuarioDTO) {
-		// Encriptar la contraseña
-		String encryptedPassword = passwordEncoder.encode(usuarioDTO.password());
-
-		// Mapear DTO a entidad y establecer contraseña encriptada
-		Usuario usuario = usuarioMapper.mapToEntity(usuarioDTO);
-		usuario.setPassword(encryptedPassword);
-		usuario.setAnuncios(new ArrayList<>());
-		usuario.setSolicitudesEnviadas(new ArrayList<>());
-
-		// Guardar en la base de datos
-		Usuario savedUsuario = usuarioRepository.save(usuario);
-
-		// Mapear a DTO para la respuesta
-		UsuarioDTO savedUsuarioDTO = usuarioMapper.mapToDTO(savedUsuario);
-		return ResponseEntity.status(201).body(savedUsuarioDTO);
+		return usuariosService.register(usuarioDTO);
 	}
 
-	// Crear un usuario (restringido a ADMIN)
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/new")
 	@Override
@@ -77,7 +49,6 @@ public class UsuariosController implements GenericController<UsuarioDTO, Long> {
 		return usuariosService.post(usuarioDTO);
 	}
 
-	// Actualizar un usuario (restringido a ADMIN)
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update")
 	@Override
@@ -85,7 +56,6 @@ public class UsuariosController implements GenericController<UsuarioDTO, Long> {
 		return usuariosService.put(usuarioDTO);
 	}
 
-	// Eliminar un usuario (restringido a ADMIN)
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.campeones.proyectomoviles.services.unimplemented.SolicitudesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,6 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 	private final UsuarioRepository usuarioRepository;
 	private final AnuncioRepository anuncioRepository;
 	private final JwtUtils jwtUtils;
-
 	@Autowired
 	public SolicitudesServiceImpl(SolicitudRepository solicitudRepository, SolicitudMapper solicitudMapper,
 			UsuarioRepository usuarioRepository, AnuncioRepository anuncioRepository, JwtUtils jwtUtils) {
@@ -70,13 +70,10 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 	@Override
 	public ResponseEntity<SolicitudDTO> put(SolicitudDTO solicitudDTO) {
 		if (solicitudRepository.existsById(solicitudDTO.id())) {
-			// Obtener la entidad existente
 			Solicitud solicitud = solicitudRepository.findById(solicitudDTO.id())
 					.orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-			// Actualizar solo los campos necesarios
 			solicitud.setFechaSolicitud(solicitudDTO.fechaSolicitud());
 			solicitud.setContestada(solicitudDTO.contestada());
-			// Reutilizar entidades existentes
 			Usuario remitente = usuarioRepository.findById(solicitudDTO.remitente().id())
 					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 			Anuncio anuncio = anuncioRepository.findById(solicitudDTO.anuncio().id())
@@ -195,4 +192,5 @@ public class SolicitudesServiceImpl implements SolicitudesService {
 
 		return Optional.empty();
 	}
+
 }

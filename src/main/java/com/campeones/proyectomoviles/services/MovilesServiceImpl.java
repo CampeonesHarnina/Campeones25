@@ -3,6 +3,8 @@ package com.campeones.proyectomoviles.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.campeones.proyectomoviles.services.unimplemented.MovilesService;
+import com.campeones.proyectomoviles.utiles.StringValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,11 +23,12 @@ public class MovilesServiceImpl implements MovilesService {
 
 	private MovilRepository repository;
 	private MovilMapper mapper;
-
+	private StringValidator validator;
 	@Autowired
 	public MovilesServiceImpl(MovilRepository repository, @Qualifier("movilMapperImpl") MovilMapper mapper) {
 		this.repository = repository;
 		this.mapper = mapper;
+		this.validator = new StringValidator();
 	}
 
 	@Override
@@ -36,6 +39,9 @@ public class MovilesServiceImpl implements MovilesService {
 	@Transactional
 	@Override
 	public ResponseEntity<MovilDTO> post(MovilDTO movil) {
+		if (!validate(movil)){
+			return ResponseEntity.badRequest().build();
+		}
 		Movil save = repository.save(mapper.mapToEntity(movil));
 		return ResponseEntity.ok(mapper.mapToDTO(save));
 	}
@@ -44,6 +50,9 @@ public class MovilesServiceImpl implements MovilesService {
 	@Override
 	public ResponseEntity<MovilDTO> put(MovilDTO movil) {
 		if (repository.existsById(movil.id())) {
+			if (!validate(movil)){
+				return ResponseEntity.badRequest().build();
+			}
 			repository.save(mapper.mapToEntity(movil));
 			return ResponseEntity.ok(movil);
 		} else {
@@ -68,6 +77,16 @@ public class MovilesServiceImpl implements MovilesService {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(repository.findAll(spec).stream().map(mapper::mapToDTO).collect(Collectors.toList()));
+	}
+
+	private boolean validate(MovilDTO movilDTO){
+		if (!validator.isValid(movilDTO.marca())){
+			return false;
+		}
+		if (!validator.isValid(movilDTO.modelo())){
+			return false;
+		}
+		return true;
 	}
 
 }
