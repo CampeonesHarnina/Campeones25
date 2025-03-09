@@ -1,10 +1,10 @@
 package com.campeones.proyectomoviles.services;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
-
-import java.util.List;
 
 public interface UsuariosService {
 	ResponseEntity<List<UsuarioDTO>> get();

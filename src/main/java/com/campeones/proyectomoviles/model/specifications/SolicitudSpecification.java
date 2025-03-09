@@ -2,10 +2,10 @@ package com.campeones.proyectomoviles.model.specifications;
 
 import java.time.LocalDate;
 
-import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
+import com.campeones.proyectomoviles.model.Entities.Usuario;
 
 public class SolicitudSpecification {
 	public static Specification<Solicitud> hasFechaMinima(LocalDate fechaMin) {
@@ -24,11 +24,10 @@ public class SolicitudSpecification {
 	}
 
 	public static Specification<Solicitud> hasRemitente(Usuario remitente) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("remitente"),
-				remitente);
+		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("remitente"), remitente);
 	}
+
 	public static Specification<Solicitud> hasAnuncio(Long anuncio) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("anuncio_id"),
-				anuncio);
+		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("anuncio_id"), anuncio);
 	}
 }

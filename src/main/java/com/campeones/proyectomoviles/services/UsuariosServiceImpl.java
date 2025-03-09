@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
-
 @Service
 public class UsuariosServiceImpl implements GenericFilterController<UsuarioDTO, Void, Long> {
 
@@ -28,7 +26,8 @@ public class UsuariosServiceImpl implements GenericFilterController<UsuarioDTO, 
 	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UsuariosServiceImpl(UsuarioRepository repository, @Qualifier("usuarioMapperImpl") UsuarioMapper mapper, PasswordEncoder passwordEncoder) {
+	public UsuariosServiceImpl(UsuarioRepository repository, @Qualifier("usuarioMapperImpl") UsuarioMapper mapper,
+			PasswordEncoder passwordEncoder) {
 		this.repository = repository;
 		this.mapper = mapper;
 		this.passwordEncoder = passwordEncoder;

@@ -7,8 +7,20 @@ import com.campeones.proyectomoviles.model.POJO.Estado;
 import com.campeones.proyectomoviles.model.POJO.TipoCambio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -37,7 +49,8 @@ public class Anuncio {
 	@JsonIgnore
 	private List<Solicitud> solicitud;
 
-	public Anuncio(Estado estado, TipoCambio tipoCambio, LocalDate fechaPublicacion, Movil movil, Usuario usuario, List<Solicitud> solicitud) {
+	public Anuncio(Estado estado, TipoCambio tipoCambio, LocalDate fechaPublicacion, Movil movil, Usuario usuario,
+			List<Solicitud> solicitud) {
 		this.estado = estado;
 		this.tipoCambio = tipoCambio;
 		this.fechaPublicacion = fechaPublicacion;

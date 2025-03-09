@@ -3,7 +3,6 @@ package com.campeones.proyectomoviles.services;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.campeones.proyectomoviles.model.Entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.campeones.proyectomoviles.model.Entities.Usuario;
 import com.campeones.proyectomoviles.repositories.UsuarioRepository;
 
 import lombok.extern.slf4j.Slf4j;

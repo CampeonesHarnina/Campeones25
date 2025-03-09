@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
 
-public interface SolicitudRepository extends JpaRepository<Solicitud, Long>,JpaSpecificationExecutor<Solicitud> {
+public interface SolicitudRepository extends JpaRepository<Solicitud, Long>, JpaSpecificationExecutor<Solicitud> {
 
 	List<Solicitud> findByRemitenteId(Long id);
 }

@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MovilFiltro {
 
-    private String marca;
-    private Integer minRam;
-    private Integer maxRam;
-    private Float minPrecio;
-    private Float maxPrecio;
-    private Boolean hasNfc;
-
+	private String marca;
+	private Integer minRam;
+	private Integer maxRam;
+	private Float minPrecio;
+	private Float maxPrecio;
+	private Boolean hasNfc;
 
 }

@@ -27,67 +27,63 @@ import lombok.extern.slf4j.Slf4j;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final JwtUtils jwtUtils;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+	private final UserDetailsServiceImpl userDetailsServiceImpl;
+	private final JwtUtils jwtUtils;
+	private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    @Autowired
-    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, JwtUtils jwtUtils,
-            JwtAuthorizationFilter jwtAuthorizationFilter) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.jwtUtils = jwtUtils;
-        this.jwtAuthorizationFilter = jwtAuthorizationFilter;
-    }
+	@Autowired
+	public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, JwtUtils jwtUtils,
+			JwtAuthorizationFilter jwtAuthorizationFilter) {
+		this.userDetailsServiceImpl = userDetailsServiceImpl;
+		this.jwtUtils = jwtUtils;
+		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+	}
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager)
-            throws Exception {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, authenticationManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager)
+			throws Exception {
+		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, authenticationManager);
+		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuración CORS global
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/anuncios/find").permitAll();
-                    auth.requestMatchers("/anuncios/filter").permitAll();
-                    auth.requestMatchers("/moviles/find").permitAll();
-                    auth.requestMatchers("/moviles/filter").permitAll();
-                    auth.requestMatchers("/procesadores/find").permitAll();
-                    auth.requestMatchers("/procesadores/filter").permitAll();
-                    auth.requestMatchers("/login").permitAll(); // Asegurar que /login sea público
-                    auth.requestMatchers("/usuarios/register").permitAll(); // Asegurar que /register sea público
-                    auth.anyRequest().authenticated();
-                })
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilter(jwtAuthenticationFilter)
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+		return httpSecurity.csrf(csrf -> csrf.disable())
+				.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuración CORS global
+				.authorizeHttpRequests(auth -> {
+					auth.requestMatchers("/anuncios/find").permitAll();
+					auth.requestMatchers("/anuncios/filter").permitAll();
+					auth.requestMatchers("/moviles/find").permitAll();
+					auth.requestMatchers("/moviles/filter").permitAll();
+					auth.requestMatchers("/procesadores/find").permitAll();
+					auth.requestMatchers("/procesadores/filter").permitAll();
+					auth.requestMatchers("/login").permitAll(); // Asegurar que /login sea público
+					auth.requestMatchers("/usuarios/register").permitAll(); // Asegurar que /register sea público
+					auth.anyRequest().authenticated();
+				}).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilter(jwtAuthenticationFilter)
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Origen del frontend
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
-        configuration.setAllowedHeaders(List.of("*")); // Permitir todos los encabezados
-        configuration.setAllowCredentials(true); // Permitir credenciales si es necesario
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Aplicar a todas las rutas
-        return source;
-    }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Origen del frontend
+		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
+		configuration.setAllowedHeaders(List.of("*")); // Permitir todos los encabezados
+		configuration.setAllowCredentials(true); // Permitir credenciales si es necesario
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration); // Aplicar a todas las rutas
+		return source;
+	}
 
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder)
-            throws Exception {
-        AuthenticationManagerBuilder authBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-        authBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
-        return authBuilder.build();
-    }
+	@Bean
+	AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder)
+			throws Exception {
+		AuthenticationManagerBuilder authBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+		authBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
+		return authBuilder.build();
+	}
 }

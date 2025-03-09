@@ -9,8 +9,17 @@ import com.campeones.proyectomoviles.model.POJO.ResolucionTarget;
 import com.campeones.proyectomoviles.model.POJO.TecnologiaPantalla;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -55,7 +64,10 @@ public class Movil {
 	@JsonIgnore
 	private List<Anuncio> anuncios;
 
-	public Movil(String marca, String modelo, int almacenamiento, float tamanioPantalla, TecnologiaPantalla tecnologiaPantalla, int ram, float peso, int camara, int bateria, boolean nfc, float precioActual, LocalDate fechaLanzamiento, int consultas, int proporcionAlto, int proporcionAncho, ResolucionTarget resolucionTarget, String dimensionesMovil, Procesador procesador) {
+	public Movil(String marca, String modelo, int almacenamiento, float tamanioPantalla,
+			TecnologiaPantalla tecnologiaPantalla, int ram, float peso, int camara, int bateria, boolean nfc,
+			float precioActual, LocalDate fechaLanzamiento, int consultas, int proporcionAlto, int proporcionAncho,
+			ResolucionTarget resolucionTarget, String dimensionesMovil, Procesador procesador) {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.almacenamiento = almacenamiento;

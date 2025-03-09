@@ -13,5 +13,5 @@ public class ProcesadorFiltro {
 	private Integer nucleo;
 	private Float velocidadMin;
 	private Float velocidadMax;
-	
+
 }
