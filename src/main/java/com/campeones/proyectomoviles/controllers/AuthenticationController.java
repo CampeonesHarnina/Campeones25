@@ -1,5 +1,6 @@
 package com.campeones.proyectomoviles.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
+	public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
 		String token = authenticationService.login(loginRequest.email(), loginRequest.password());
 		return ResponseEntity.ok(token);
 	}

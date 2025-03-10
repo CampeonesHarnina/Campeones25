@@ -3,16 +3,12 @@ package com.campeones.proyectomoviles.controllers;
 import java.util.List;
 
 import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
 import com.campeones.proyectomoviles.model.Entities.Procesador;
@@ -39,21 +35,21 @@ public class ProcesadoresFilterController implements GenericFilterController<Pro
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/procesadores/new")
 	@Override
-	public ResponseEntity<ProcesadorDTO> post(ProcesadorDTO procesadorDTO) {
+	public ResponseEntity<ProcesadorDTO> post(@Valid @RequestBody ProcesadorDTO procesadorDTO) {
 		return procesadoresService.post(procesadorDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/procesadores/update")
 	@Override
-	public ResponseEntity<ProcesadorDTO> put(ProcesadorDTO procesadorDTO) {
+	public ResponseEntity<ProcesadorDTO> put(@Valid @RequestBody ProcesadorDTO procesadorDTO) {
 		return procesadoresService.put(procesadorDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/procesadores/delete/{id}")
 	@Override
-	public ResponseEntity<ProcesadorDTO> delete(Long id) {
+	public ResponseEntity<ProcesadorDTO> delete(@RequestParam Long id) {
 		return procesadoresService.delete(id);
 	}
 

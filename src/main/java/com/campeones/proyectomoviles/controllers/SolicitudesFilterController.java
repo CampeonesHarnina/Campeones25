@@ -4,19 +4,12 @@ import java.util.List;
 
 import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
 import com.campeones.proyectomoviles.controllers.unimplemented.UserCrudController;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
@@ -45,21 +38,21 @@ public class SolicitudesFilterController implements GenericFilterController<Soli
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/solicitudes/new")
 	@Override
-	public ResponseEntity<SolicitudDTO> post(SolicitudDTO solicitudDTO) {
+	public ResponseEntity<SolicitudDTO> post(@Valid @RequestBody SolicitudDTO solicitudDTO) {
 		return solicitudesService.post(solicitudDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/solicitudes/update")
 	@Override
-	public ResponseEntity<SolicitudDTO> put(SolicitudDTO solicitudDTO) {
+	public ResponseEntity<SolicitudDTO> put(@Valid @RequestBody SolicitudDTO solicitudDTO) {
 		return solicitudesService.put(solicitudDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/solicitudes/delete/{id}")
 	@Override
-	public ResponseEntity<SolicitudDTO> delete(Long id) {
+	public ResponseEntity<SolicitudDTO> delete(@RequestParam Long id) {
 		return solicitudesService.delete(id);
 	}
 

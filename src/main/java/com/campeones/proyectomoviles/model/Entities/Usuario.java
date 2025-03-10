@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,12 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Pattern(regexp = "^[a-zA-Z0-9'.\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String nombre;
 	@Column(unique = true)
+	@Pattern(regexp = "^[a-zA-Z0-9@.,\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String email;
+	@Pattern(regexp = "^[a-zA-Z0-9_@#%$€&!?¿¡'/*.,\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String password;
 	private Boolean esAdmin;
 

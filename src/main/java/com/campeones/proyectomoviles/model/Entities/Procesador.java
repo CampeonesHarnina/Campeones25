@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Procesador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Pattern(regexp = "^[a-zA-Z0-9_!?¿¡'/.,\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String tipo;
 	private Integer nucleo;
 	private Float velocidadMaxima;

@@ -1,4 +1,8 @@
 package com.campeones.proyectomoviles.model.DTO;
 
-public record ProcesadorDTO(Long idProcesador, String tipo, int nucleo, float velocidadMaxima) {
+import jakarta.validation.constraints.Pattern;
+
+public record ProcesadorDTO(Long idProcesador,
+                            @Pattern(regexp = "^[a-zA-Z0-9_!?¿¡'/.,\\sáéíóúÁÉÍÓÚñÑ]*$")
+                            String tipo, int nucleo, float velocidadMaxima) {
 }

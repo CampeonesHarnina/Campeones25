@@ -20,10 +20,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.validation.annotation.Validated;
 
 @Entity
 @NoArgsConstructor
@@ -32,7 +34,9 @@ public class Movil {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Pattern(regexp = "^[a-zA-Z0-9_!?¿¡'/.,\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String marca;
+	@Pattern(regexp = "^[a-zA-Z0-9_!?¿¡'/.,\\sáéíóúÁÉÍÓÚñÑ]*$")
 	private String modelo;
 	private int almacenamiento;
 	private float tamanioPantalla;

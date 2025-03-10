@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.controllers;
 import java.util.List;
 
 import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +43,14 @@ public class MovilesFilterController implements GenericFilterController<MovilDTO
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/moviles/new")
 	@Override
-	public ResponseEntity<MovilDTO> post(@RequestBody MovilDTO movilDTO) {
+	public ResponseEntity<MovilDTO> post(@Valid @RequestBody MovilDTO movilDTO) {
 		return movilesService.post(movilDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/moviles/update")
 	@Override
-	public ResponseEntity<MovilDTO> put(@RequestBody MovilDTO movilDTO) {
+	public ResponseEntity<MovilDTO> put(@Valid @RequestBody MovilDTO movilDTO) {
 		return movilesService.put(movilDTO);
 	}
 

@@ -3,6 +3,7 @@ package com.campeones.proyectomoviles.controllers;
 import java.util.List;
 
 import com.campeones.proyectomoviles.controllers.unimplemented.GenericController;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,21 +39,21 @@ public class UsuariosController implements GenericController<UsuarioDTO, Long> {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<UsuarioDTO> register(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<UsuarioDTO> register(@Valid @RequestBody UsuarioDTO usuarioDTO) {
 		return usuariosService.register(usuarioDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/new")
 	@Override
-	public ResponseEntity<UsuarioDTO> post(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<UsuarioDTO> post(@Valid @RequestBody UsuarioDTO usuarioDTO) {
 		return usuariosService.post(usuarioDTO);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update")
 	@Override
-	public ResponseEntity<UsuarioDTO> put(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<UsuarioDTO> put(@Valid @RequestBody UsuarioDTO usuarioDTO) {
 		return usuariosService.put(usuarioDTO);
 	}
 
