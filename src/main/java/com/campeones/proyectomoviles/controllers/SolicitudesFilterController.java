@@ -2,20 +2,30 @@ package com.campeones.proyectomoviles.controllers;
 
 import java.util.List;
 
-import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
-import com.campeones.proyectomoviles.controllers.unimplemented.UserCrudController;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.campeones.proyectomoviles.controllers.unimplemented.GenericFilterController;
+import com.campeones.proyectomoviles.controllers.unimplemented.UserCrudController;
 import com.campeones.proyectomoviles.model.DTO.SolicitudDTO;
 import com.campeones.proyectomoviles.model.Entities.Solicitud;
 import com.campeones.proyectomoviles.model.filtros.SolicitudFiltro;
 import com.campeones.proyectomoviles.model.specifications.SolicitudSpecification;
 import com.campeones.proyectomoviles.services.SolicitudesServiceImpl;
+
+import jakarta.validation.Valid;
 
 @CrossOrigin("*")
 @RestController

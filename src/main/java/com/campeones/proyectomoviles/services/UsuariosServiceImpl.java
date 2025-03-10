@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.campeones.proyectomoviles.services.unimplemented.UsuariosService;
-import com.campeones.proyectomoviles.utiles.StringValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,7 @@ import com.campeones.proyectomoviles.mappers.UsuarioMapper;
 import com.campeones.proyectomoviles.model.DTO.UsuarioDTO;
 import com.campeones.proyectomoviles.model.Entities.Usuario;
 import com.campeones.proyectomoviles.repositories.UsuarioRepository;
+import com.campeones.proyectomoviles.services.unimplemented.UsuariosService;
 
 import jakarta.transaction.Transactional;
 

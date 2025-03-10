@@ -3,8 +3,6 @@ package com.campeones.proyectomoviles.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.campeones.proyectomoviles.services.unimplemented.ProcesadoresService;
-import com.campeones.proyectomoviles.utiles.StringValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +13,7 @@ import com.campeones.proyectomoviles.mappers.ProcesadorMapper;
 import com.campeones.proyectomoviles.model.DTO.ProcesadorDTO;
 import com.campeones.proyectomoviles.model.Entities.Procesador;
 import com.campeones.proyectomoviles.repositories.ProcesadorRepository;
+import com.campeones.proyectomoviles.services.unimplemented.ProcesadoresService;
 
 import jakarta.transaction.Transactional;
 
@@ -69,6 +68,5 @@ public class ProcesadoresServiceImpl implements ProcesadoresService {
 	public ResponseEntity<List<ProcesadorDTO>> getByFilter(Specification<Procesador> spec) {
 		return ResponseEntity.ok(repository.findAll(spec).stream().map(mapper::mapToDTO).collect(Collectors.toList()));
 	}
-
 
 }

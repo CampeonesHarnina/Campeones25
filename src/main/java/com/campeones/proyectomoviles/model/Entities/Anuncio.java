@@ -21,7 +21,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.processing.Pattern;
 
 @Entity
 @NoArgsConstructor
